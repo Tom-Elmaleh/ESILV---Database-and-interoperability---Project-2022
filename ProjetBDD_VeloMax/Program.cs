@@ -30,7 +30,7 @@ namespace ProjetBDD_VeloMax
             }
             catch (MySqlException e)
             {
-                Console.WriteLine(" ErreurConnexion : " + e.ToString());
+                Console.WriteLine(" ErreurCnnexion : " + e.ToString());
                 return;
             }
 
