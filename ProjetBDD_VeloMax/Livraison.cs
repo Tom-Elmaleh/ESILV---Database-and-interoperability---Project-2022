@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace ProjetBDD_VeloMax
 {
-    class Fournisseur
+    class Livraison
     {
+        private string numP { get; set; }
         private string siret { get; set; }
-        private string nomF { get; set; }
-        private string adresseF { get; set; }
-        private string contactF { get; set; }
-        private int libelle { get; set; }
+        private DateTime date_introP { get; set; }
+        private DateTime date_sortieP { get; set; }
 
-        public Fournisseur()
+        public Livraison()
         {
 
         }
