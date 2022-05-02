@@ -1,4 +1,6 @@
 ﻿using System;
+using MySql.Data.MySqlClient;
+
 
 namespace ProjetBDD_VeloMax
 {
@@ -6,7 +8,24 @@ namespace ProjetBDD_VeloMax
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            MySqlConnection maConnexion = null;
+            try
+            {
+                string connexionString = "SERVER=localhost;PORT=3306;" +
+                                         "DATABASE=velomax;" +
+                                         "UID=root;PASSWORD=I#mvengeance103darkness";
+
+                maConnexion = new MySqlConnection(connexionString);
+                maConnexion.Open();
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(" ErreurConnexion : " + e.ToString());
+                return;
+            }
+           
+
+
         }
     }
 }
