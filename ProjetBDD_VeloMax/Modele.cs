@@ -21,6 +21,20 @@ namespace ProjetBDD_VeloMax
 
         }
 
-       
+        public Modele(int numM,string nomVelo,string grandeur,int prix,DateTime date_introV, DateTime date_sortieV)
+        {
+            this.numM = numM;
+            this.nomVelo = nomVelo;
+            this.grandeur = grandeur;
+            this.prix = prix;
+            this.date_introV = date_introV;
+            this.date_sortieV = date_sortieV;
+        }
+
+        public string ToString()
+        {
+            string resultat = $"{numM}|{nomVelo}|{grandeur}|{prix}|{date_introV}|{date_sortieV}";
+            return resultat;
+        }
     }
 }
