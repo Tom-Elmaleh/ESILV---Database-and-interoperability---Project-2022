@@ -19,7 +19,7 @@ namespace ProjetBDD_VeloMax
             return convDate;
         }
 
-        static void Test(MySqlConnection connection)
+        static void TestModele(MySqlConnection connection)
         {
             List<Modele> modeles = new List<Modele>();
             connection.Open();
@@ -48,11 +48,102 @@ namespace ProjetBDD_VeloMax
                 modeles.Add(new Modele(numM, nomVelo, grandeur, prix, date_intro, date_sortie));
             }
 
+            Console.WriteLine("\nListe des modèles\n");
+
             foreach (Modele element in modeles)
             {
                 Console.WriteLine(element.ToString());
             }
 
+            connection.Close();
+        }
+
+        static void Delete(MySqlConnection connection)
+        {
+            Console.WriteLine("\nQue voulez vous supprimer :" +
+               "\nFournisseur (fournisseur)" +
+               "\nPièce(piece)" +
+               "\nCommande(commande)"
+               + "\nModèle (modele)"
+               + "\nclient Individu (individu)" +
+               "\nclient Entreprise (entreprise)");
+            string table = Console.ReadLine();
+            Console.WriteLine("\nIndiquer la valeur de l'identifiant(clé primaire) du tuple à supprimer ? ");
+            string id = Console.ReadLine();
+            string key = "";
+            switch(table)
+            {
+                case "commande":
+                    key = "numC";
+                    break;
+                case "entreprise":
+                    key = "nomE";
+                    break;
+                case "fournisseur":
+                    key = "siret";
+                    break;
+                case "individu":
+                    key = "id";
+                    break;
+                case "modele":
+                    key = "numM";
+                    break;
+                case "piece":
+                    key = "numP";
+                    break;
+            }
+            //Console.WriteLine("Indiquer les conditions de mise à jour sur les attributs souhaités à la manière d'une requête SQL (adapter selon les types des attributs) à mettre à jour ? ");
+            //string condition = Console.ReadLine();
+            //$"delete from {table} where condition;"
+
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = $"delete from {table} where {key}={id};";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+            connection.Close();
+        }
+
+        static void Creer(MySqlConnection connection)
+        {
+            Console.WriteLine("\nQue voulez vous créer :" +
+               "\nFournisseur (fournisseur)" +
+               "\nPièce(piece)" +
+               "\nCommande(commande)"
+               + "\nModèle (modele)"
+               + "\nclient Individu (individu)" +
+               "\nclient Entreprise (entreprise)");
+            string table = Console.ReadLine();
+            Console.WriteLine("\nIndiquer les valeurs pour chacun des attributs à la manière d'une requête SQL (adapter selon les types) ? ");
+            string valeurs = Console.ReadLine();
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = $"insert into {table} values ({valeurs});";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+            connection.Close();
+        }
+
+        static void MAJ(MySqlConnection connection)
+        {
+            Console.WriteLine("\nQue voulez vous mettre à jour :" +
+               "\nFournisseur (fournisseur)" +
+               "\nPièce(piece)" +
+               "\nCommande(commande)"
+               + "\nModèle (modele)"
+               + "\nclient Individu (individu)" +
+               "\nclient Entreprise (entreprise)");
+
+            string table = Console.ReadLine();
+            Console.WriteLine("\nIndiquer les valeurs pour chacun des attributs à modifier comme une requête SQL (adapter selon les types attributs à modifier) ? ");
+            string maj = Console.ReadLine();
+            Console.WriteLine("\nIndiquer les conditions de mise à jour sur les attributs souhaités à la manière d'une requête SQL (adapter selon les types des attributs) à mettre à jour ? ");
+            string condition = Console.ReadLine();
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = $"update {table} set {maj} where {condition};";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
             connection.Close();
         }
 
@@ -71,8 +162,13 @@ namespace ProjetBDD_VeloMax
                 Console.WriteLine(" ErreurConnexion : " + e.ToString());
                 return;
             }
+            Console.WriteLine("VeloMax");
+            //Creer(maConnexion);
+            //TestModele(maConnexion);
+            //MAJ(maConnexion);
+            //TestModele(maConnexion);
+            TestModele(maConnexion);
 
-            Test(maConnexion);
         }
     }
 }
