@@ -31,7 +31,7 @@ namespace ProjetBDD_VeloMax
             this.date_sortieV = date_sortieV;
         }
 
-        public string ToString()
+        public override string ToString()
         {
             string resultat = $"{numM}|{nomVelo}|{grandeur}|{prix}|{date_introV}|{date_sortieV}";
             return resultat;
