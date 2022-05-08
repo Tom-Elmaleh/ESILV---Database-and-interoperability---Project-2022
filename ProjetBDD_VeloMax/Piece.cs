@@ -15,12 +15,14 @@ namespace ProjetBDD_VeloMax
         private int stock { get; set; }
         private int prixP { get; set; }
 
-        public Piece()
+        public Piece(string numP,string descriptionP,int num_catalogue,int delai,int stock,int prixP)
         {
-                
+            this.numP = numP;
+            this.descriptionP = descriptionP;
+            this.num_catalogue = num_catalogue;
+            this.delai = delai;
+            this.stock = stock;
+            this.prixP = prixP;
         }
-
-
-
     }
 }

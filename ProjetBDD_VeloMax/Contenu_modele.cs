@@ -12,9 +12,11 @@ namespace ProjetBDD_VeloMax
         private int numM { get; set; }
         private int numC { get; set; }
 
-        public Contenu_Modele()
+        public Contenu_Modele(int quantiteM,int numM,int numC)
         {
-
+            this.quantiteM = quantiteM;
+            this.numM = numM;
+            this.numC = numC;
         }
     }
 }

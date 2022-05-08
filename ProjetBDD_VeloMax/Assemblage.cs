@@ -11,10 +11,10 @@ namespace ProjetBDD_VeloMax
         private int numM { get; set; }
         private string numP { get; set; }
 
-
-        public Assemblage()
+        public Assemblage(int numM,string numP)
         {
-                
+            this.numM = numM;
+            this.numP = numP;
         }
     }
 

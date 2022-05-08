@@ -14,9 +14,13 @@ namespace ProjetBDD_VeloMax
         private string contactF { get; set; }
         private int libelle { get; set; }
 
-        public Fournisseur()
+        public Fournisseur(string siret,string nomF,string adresseF,string contactF,int libelle)
         {
-
+            this.siret = siret;
+            this.nomF = nomF;
+            this.adresseF = adresseF;
+            this.contactF = contactF;
+            this.libelle = libelle;
         }
     }
 }

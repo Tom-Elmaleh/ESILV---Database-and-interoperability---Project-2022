@@ -16,9 +16,15 @@ namespace ProjetBDD_VeloMax
         private string courrielI { get; set; }
         private int numero { get; set; }
 
-        public Individu()
+        public Individu(int id,string nomI,string prenom,string telephoneI,string adresseI,string courrielI,int numero)
         {
-                
+            this.id = id;
+            this.nomI = nomI;
+            this.prenom = prenom;
+            this.telephoneI = telephoneI;
+            this.adresseI = adresseI;
+            this.courrielI = courrielI;
+            this.numero = numero;
         }
     }
 }

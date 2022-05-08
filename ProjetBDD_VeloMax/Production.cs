@@ -11,9 +11,10 @@ namespace ProjetBDD_VeloMax
         private string numP { get; set; }
         private string siret { get; set; }
 
-        public Production()
+        public Production(string numP,string siret)
         {
-
+            this.numP = numP;
+            this.siret = siret;
         }
     }
 }

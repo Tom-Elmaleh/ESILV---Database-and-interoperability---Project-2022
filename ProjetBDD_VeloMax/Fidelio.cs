@@ -11,12 +11,16 @@ namespace ProjetBDD_VeloMax
         private int numero { get; set; }
         private string description { get; set; }
         private int cout { get; set; }
-        private string duree { get; set; }
-        private float rabais { get; set; }
+        private int duree { get; set; }
+        private int rabais { get; set; }
 
-        public Fidelio()
+        public Fidelio(int numero,string description,int cout,int duree,int rabais)
         {
-
+            this.numero = numero;
+            this.description = description;
+            this.cout = cout;
+            this.duree = duree;
+            this.rabais = rabais;
         }
     }
 }

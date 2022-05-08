@@ -18,7 +18,7 @@ namespace ProjetBDD_VeloMax
 
         public Modele()
         {
-
+            // pour le XML
         }
 
         public Modele(int numM,string nomVelo,string grandeur,int prix,DateTime date_introV, DateTime date_sortieV)

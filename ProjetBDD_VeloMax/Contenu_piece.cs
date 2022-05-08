@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace ProjetBDD_VeloMax
 {
-    class Contenu_piece
+    class Contenu_Piece
     {
         private int quantiteP { get; set; }
         private string numP { get; set; }
         private int numC { get; set; }
 
-        public Contenu_piece()
+        public Contenu_Piece(int quantiteP,string numP,int numC)
         {
-
+            this.quantiteP = quantiteP;
+            this.numP = numP;
+            this.numC = numC;
         }
     }
 }
