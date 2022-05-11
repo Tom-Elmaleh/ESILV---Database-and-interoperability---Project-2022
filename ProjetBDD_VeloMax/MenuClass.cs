@@ -102,34 +102,50 @@ namespace ProjetBDD_VeloMax
             return Tableau;
         }
 
-
-        public void Menu()
+        public MySqlConnection Connection(string user)
         {
-
-            List<Modele> modeles = new List<Modele>();
+            string password = "";
             MySqlConnection maConnexion = null;
             try
             {
+                if(user=="root")
+                {
+                    password = "I#mvengeance103darkness";   // Cas de l'utilisateur root avec les droits 
+                }
+
+                else
+                {
+                    password = "user";    // Cas de l'utilisateur ayant uniquement les accès en lecture
+                }
+
                 string connexionString = "SERVER=localhost;PORT=3306;" +
                                          "DATABASE=velomax;" +
-                                         "UID=root;PASSWORD=I#mvengeance103darkness";
+                                         $"UID={user};PASSWORD={password}";
                 maConnexion = new MySqlConnection(connexionString);
             }
             catch (MySqlException e)
             {
                 Console.WriteLine(" ErreurConnexion : " + e.ToString());
-                return;
             }
 
-            BddVelo bdd = new BddVelo();
+            return maConnexion;
+        }
+
+
+        public void Menu()
+        {
+
+            Console.WriteLine("\n Définir le nom du user ?");
+            string user = Console.ReadLine();
+            MySqlConnection maConnexion = Connection(user);
+            BddVelo bdd = new BddVelo(maConnexion);
             bdd.ListeMembres(maConnexion);
-            // bdd.Delete(maConnexion,)
 
             XmlSerializer xs = new XmlSerializer(typeof(Piece));
             StreamWriter wr = new StreamWriter("bdd.xml");
 
             //sérialisation de bdtheque
-         //   xs.Serialize(wr,bdd);
+         //    xs.Serialize(wr,bdd);
 
             wr.Close();
 

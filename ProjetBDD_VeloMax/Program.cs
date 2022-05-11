@@ -11,8 +11,6 @@ namespace ProjetBDD_VeloMax
         {
             MenuClass menu = new MenuClass();
             menu.Menu();
-
-            BddVelo bdd = new BddVelo();
             //bdd.Models;
         }
     }

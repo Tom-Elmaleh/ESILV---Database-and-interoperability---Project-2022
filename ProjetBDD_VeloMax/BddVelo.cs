@@ -10,6 +10,7 @@ namespace ProjetBDD_VeloMax
 {
     class BddVelo
     {
+        private MySqlConnection connexion = new MySqlConnection();
         private List<Modele> modeles = new List<Modele>();
         public List<Modele> Models { get { return modeles; } set { value = modeles; } }
         private List<Piece> pieces = new List<Piece>();
@@ -36,9 +37,9 @@ namespace ProjetBDD_VeloMax
         public List<Livraison> Livraisons { get { return livraisons; } set { value = livraisons; } }
 
 
-        public BddVelo()
+        public BddVelo(MySqlConnection connexion)
         {
-            MySqlConnection connexion = Connection();
+            this.connexion = connexion;
             LectureModele(connexion);
             //LectureCommande(connexion);
             LecturePiece(connexion);
@@ -220,23 +221,6 @@ namespace ProjetBDD_VeloMax
             Choose(connection,table);
         }
 
-        public MySqlConnection Connection()
-        {
-            MySqlConnection maConnexion = null;
-            try
-            {
-                string connexionString = "SERVER=localhost;PORT=3306;" +
-                                         "DATABASE=velomax;" +
-                                         "UID=root;PASSWORD=I#mvengeance103darkness";
-                maConnexion = new MySqlConnection(connexionString);
-            }
-            catch (MySqlException e)
-            {
-                Console.WriteLine(" ErreurConnexion : " + e.ToString());
-            }
-
-          return maConnexion;
-        }
 
         /// <summary>
         /// Cette méthode recrée la liste de modèles via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
@@ -258,6 +242,7 @@ namespace ProjetBDD_VeloMax
             string ligne;
             DateTime date_intro;
             DateTime date_sortie;
+            int stockM;
 
             while (reader.Read())// parcours ligne par ligne
             {
@@ -268,7 +253,8 @@ namespace ProjetBDD_VeloMax
                 ligne = reader.GetString(4);
                 date_intro = ConversionDateTime(reader.GetString(5));
                 date_sortie = ConversionDateTime(reader.GetString(6));
-                modeles.Add(new Modele(numM, nomVelo, grandeur, prix, date_intro, date_sortie));
+                stockM = reader.GetInt32(7);
+                modeles.Add(new Modele(numM, nomVelo, grandeur, prix, date_intro, date_sortie,stockM));
             }
             connection.Close();     
         }
