@@ -15,6 +15,14 @@ namespace ProjetBDD_VeloMax
         private int stock { get; set; }
         private int prixP { get; set; }
 
+        public string NUMP { get { return numP; } set { numP = value; } }
+        public string Description { get { return descriptionP; } set { descriptionP = value; } }
+        public int Numcatalog { get { return num_catalogue; } set { num_catalogue = value; } }
+        public int Delai { get { return delai; } set { delai = value; } }
+        public int Stock { get { return stock; } set { stock = value; } }
+        public int PrixP { get { return prixP; } set { prixP = value; } }
+
+
         public Piece(string numP, string descriptionP, int num_catalogue, int delai, int stock, int prixP)
         {
             this.numP = numP;
@@ -35,7 +43,10 @@ namespace ProjetBDD_VeloMax
         {
         }
 
-
-
-}
+        public override string ToString()
+        {
+            return $" numPiece : {numP} ,Description : {descriptionP}, Num_catalogue : {num_catalogue},Delai : {delai}, " +
+            $"Stock {stock}, Prix {prixP} ";
+        }
+    }
 }

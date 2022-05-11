@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 
 namespace ProjetBDD_VeloMax
 {
-    class BddVelo 
+    class BddVelo
     {
         private List<Modele> modeles = new List<Modele>();
         public List<Modele> Models { get { return modeles; } set { value = modeles; } }
@@ -40,12 +40,12 @@ namespace ProjetBDD_VeloMax
         {
             MySqlConnection connexion = Connection();
             LectureModele(connexion);
-          //LectureCommande(connexion);
+            //LectureCommande(connexion);
             LecturePiece(connexion);
             LectureEntreprises(connexion);
             LectureIndividu(connexion);
             LectureFournisseur(connexion);
-         // LectureAssemblage(connexion);
+            // LectureAssemblage(connexion);
             LectureContenu_M(connexion);
             LectureContenu_P(connexion);
             LectureFidelio(connexion);
@@ -55,7 +55,7 @@ namespace ProjetBDD_VeloMax
 
         public BddVelo(List<Modele> m)
         {
-            this.modeles = m; 
+            this.modeles = m;
         }
 
         ////2.Produire la liste des membres pour chaque programme d’adhésion.
@@ -68,6 +68,29 @@ namespace ProjetBDD_VeloMax
         //    reader = command.ExecuteReader();
         //}
 
+
+        /// <summary>
+        /// Méthode qui retourne le nombre de clients de VeloMax
+        /// </summary>
+        public void NombredeClients()
+        {
+            Console.WriteLine($"Il y a {individus.Count()} clients particuliers et {entreprises.Count()} clients entreprises");
+        }
+
+        /// <summary>
+        /// Méthode qui retourne le nombre de pices dont le stock
+        /// </summary>
+        public void ProduitStock2()
+        {
+            for (int i=0;i<=pieces.Count();i++)
+            {
+                if (pieces[i].Stock<=2)
+                {
+                    Console.WriteLine(pieces[i].ToString());
+                }
+            }
+            
+        }
 
         public void ListeMembres(MySqlConnection connection)
         {
