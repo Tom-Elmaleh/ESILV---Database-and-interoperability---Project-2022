@@ -25,18 +25,17 @@ namespace ProjetBDD_VeloMax
             this.prixP = prixP;
         }
 
-        //public Piece(string numP, string descriptionP, int num_catalogue, int stock)
-        //     : this(numP, descriptionP, num_catalogue, stock)
-        //{
-        //}
+        public Piece(string numP, string descriptionP, int num_catalogue, int stock)
+             : this(numP, descriptionP, num_catalogue,-1,stock,-1)
+        {
+        }
 
-        //public Piece()
-
-        //    : this("N/C", "N/C", 0, 0);
-        //{
-        //}
-            
+        public Piece()
+            : this("N/C", "N/C", 0, 0)
+        {
+        }
 
 
-    }
+
+}
 }

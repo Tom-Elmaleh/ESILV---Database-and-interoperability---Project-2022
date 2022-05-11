@@ -124,11 +124,11 @@ namespace ProjetBDD_VeloMax
             bdd.ListeMembres(maConnexion);
             // bdd.Delete(maConnexion,)
 
-            XmlSerializer xs = new XmlSerializer(typeof(Commande));
+            XmlSerializer xs = new XmlSerializer(typeof(Piece));
             StreamWriter wr = new StreamWriter("bdd.xml");
 
             //sérialisation de bdtheque
-            xs.Serialize(wr, bdd);
+         //   xs.Serialize(wr,bdd);
 
             wr.Close();
 
