@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjetBDD_VeloMax
 {
-    class Piece
+    public class Piece
     {
         private string numP { get; set; }
         private string descriptionP { get; set; }
@@ -15,7 +15,7 @@ namespace ProjetBDD_VeloMax
         private int stock { get; set; }
         private int prixP { get; set; }
 
-        public Piece(string numP,string descriptionP,int num_catalogue,int delai,int stock,int prixP)
+        public Piece(string numP, string descriptionP, int num_catalogue, int delai, int stock, int prixP)
         {
             this.numP = numP;
             this.descriptionP = descriptionP;
@@ -24,5 +24,19 @@ namespace ProjetBDD_VeloMax
             this.stock = stock;
             this.prixP = prixP;
         }
+
+        //public Piece(string numP, string descriptionP, int num_catalogue, int stock)
+        //     : this(numP, descriptionP, num_catalogue, stock)
+        //{
+        //}
+
+        //public Piece()
+
+        //    : this("N/C", "N/C", 0, 0);
+        //{
+        //}
+            
+
+
     }
 }

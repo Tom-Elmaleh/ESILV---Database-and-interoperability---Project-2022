@@ -35,6 +35,7 @@ namespace ProjetBDD_VeloMax
         private List<Livraison> livraisons = new List<Livraison>();
         public List<Livraison> Livraisons { get { return livraisons; } set { value = livraisons; } }
 
+
         public BddVelo()
         {
             MySqlConnection connexion = Connection();
@@ -67,6 +68,58 @@ namespace ProjetBDD_VeloMax
         //    reader = command.ExecuteReader();
         //}
 
+
+        public void ListeMembres(MySqlConnection connection)
+        {
+            //var individusGroupedByNumero = individus.GroupJoin(individu => individu.Numero);
+
+
+           var individusGroupedByNumero = individus.GroupBy(individu => individu.Numero);
+            
+            //var ProgrammeFidelio = fidelios.GroupBy()
+            //fidelios.GroupJoin(fidelios, individus.Numero);
+            foreach (var groupe in individusGroupedByNumero)
+            {
+                Console.WriteLine("Programme d'adhésion" + groupe.Key);
+                foreach(var ind in groupe)
+                {
+                    Console.WriteLine(ind.ToString());
+                }
+            }
+
+            List<Object> Members = new List<Object>();
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select i.*,descriptionf,duree from individu i join fidelio f on f.numero=i.numero " +
+            "group by i.id,descriptionf order by f.numero asc;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+
+            int id;
+            string nomI;
+            string prenom;
+            string telephoneI;
+            string adresseI;
+            string courrielI;
+            int numero;
+            string descriptionf;
+            string duree;
+
+            while (reader.Read())// parcours ligne par ligne
+            {
+                id = reader.GetInt32(0);
+                nomI = reader.GetString(1);
+                prenom = reader.GetString(2);
+                telephoneI = reader.GetString(3);
+                adresseI = reader.GetString(4);
+                courrielI = reader.GetString(5);
+                numero = reader.GetInt32(6);
+                descriptionf = reader.GetString(7);
+                duree = $"{reader.GetInt32(8)} an";
+              //  Members.Add(new Object(id, nomI, prenom, telephoneI, adresseI, courrielI, numero, descriptionf));
+            }
+            connection.Close();
+        }
 
         static DateTime ConversionDateTime(string date)
         {

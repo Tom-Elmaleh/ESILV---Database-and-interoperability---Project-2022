@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjetBDD_VeloMax
 {
-    class Commande
+    public class Commande
     {
         private int numC { get; set; }
         private DateTime dateC { get; set; }
@@ -14,6 +14,13 @@ namespace ProjetBDD_VeloMax
         private string adresseC { get; set; }
         private string nomE { get; set; }
         private int id { get; set; }
+
+        public int NUMC { get { return numC; } set { numC = value; } }
+        public DateTime DATEC { get { return dateC; } set { dateC = value; } }
+        public DateTime DATE_L { get { return dateLivraison; } set { dateLivraison = value; } }
+        public string Adresse { get { return adresseC; } set { adresseC = value; } }
+        private string Nom { get { return nomE; } set { nomE = value; } }
+        public int ID { get { return id; } set { id = value; } }
 
         public Commande(int numC, DateTime dateC, DateTime dateLivraison,string adresseC,string nomE,int id)
         {
@@ -24,5 +31,19 @@ namespace ProjetBDD_VeloMax
             this.nomE = nomE;
             this.id = id;
         }
+
+    //    public Commandexml()
+    //    {
+    //        public Commande(int numC, DateTime dateC, DateTime dateLivraison, string adresseC, string nomE, int id)
+				//: this(numC, -1)
+
+    //        {
+    //        }
+    //    }
+
+        //public Commande()
+        //        : this(null, null, null, "N/C", "N/C", null); // N/C : Non Communiqué
+        //{
+        //}
     }
 }

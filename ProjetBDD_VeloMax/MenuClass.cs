@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using System.Xml;
+using System.Xml.XPath;
+using System.IO;
+using System.Xml.Serialization;
+
 
 namespace ProjetBDD_VeloMax
 {
@@ -116,8 +121,16 @@ namespace ProjetBDD_VeloMax
             }
 
             BddVelo bdd = new BddVelo();
-           // bdd.Delete(maConnexion,)
+            bdd.ListeMembres(maConnexion);
+            // bdd.Delete(maConnexion,)
 
+            XmlSerializer xs = new XmlSerializer(typeof(Commande));
+            StreamWriter wr = new StreamWriter("bdd.xml");
+
+            //sérialisation de bdtheque
+            xs.Serialize(wr, bdd);
+
+            wr.Close();
 
 
         }

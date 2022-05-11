@@ -14,6 +14,8 @@ namespace ProjetBDD_VeloMax
         private int duree { get; set; }
         private int rabais { get; set; }
 
+        public int NumeroF { get; set; }
+
         public Fidelio(int numero,string description,int cout,int duree,int rabais)
         {
             this.numero = numero;
