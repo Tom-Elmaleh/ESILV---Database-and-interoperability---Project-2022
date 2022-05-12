@@ -17,6 +17,8 @@ namespace ProjetBDD_VeloMax
         private DateTime date_sortieV { get; set; }
         private int stockM { get; set; }
 
+        public int Stock { get { return stockM; } set { stockM = value; } }  
+
         public Modele()
         {
             // pour le XML

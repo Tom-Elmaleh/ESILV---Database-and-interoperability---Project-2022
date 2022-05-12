@@ -131,25 +131,50 @@ namespace ProjetBDD_VeloMax
             return maConnexion;
         }
 
+        public void ModuleStats(BddVelo bdd)
+        {
+            /* 1. Produire un rapport statistique présentant les quantités vendues de chaque item qui se
+                trouve dans l’inventaire de VéloMax
+             * 
+             * 2. Produire la liste des membres pour chaque programme d’adhésion. 
+            
+             * 
+             * 
+             * 
+             * 
+             * 
+             */
+
+
+            
+        }
+
 
         public void Menu()
         {
+            /*
+             * 
+             * 
+             *  Mettre un cas pour changer de user si possible dans le menu
+             * 
+             * */
 
-            Console.WriteLine("\n Définir le nom du user ?");
+
+            Console.WriteLine("\n Définir le nom du user ?"); // root ou bozo 
             string user = Console.ReadLine();
             MySqlConnection maConnexion = Connection(user);
             BddVelo bdd = new BddVelo(maConnexion);
-            bdd.ListeMembres(maConnexion);
+           // bdd.ListeMembres(maConnexion);
+            
+            //XmlSerializer xs = new XmlSerializer(typeof(Piece));
+            //StreamWriter wr = new StreamWriter("bdd.xml");
 
-            XmlSerializer xs = new XmlSerializer(typeof(Piece));
-            StreamWriter wr = new StreamWriter("bdd.xml");
-
-            //sérialisation de bdtheque
-         //    xs.Serialize(wr,bdd);
-
-            wr.Close();
-
-
+           string path= "C:/Users/user/Downloads";
+            var writer = new System.Xml.Serialization.XmlSerializer(typeof(List<Piece>));
+            var file = new StreamWriter(path);
+            writer.Serialize(file, bdd.Pieces);
+            file.Close();
+  
         }
     }
 }

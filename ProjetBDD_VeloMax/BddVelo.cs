@@ -50,25 +50,16 @@ namespace ProjetBDD_VeloMax
             LectureContenu_M(connexion);
             LectureContenu_P(connexion);
             LectureFidelio(connexion);
-            LectureProduction(connexion);
-            LectureLivraison(connexion);
+            //LectureProduction(connexion);
+            //LectureLivraison(connexion);
         }
+
+
 
         public BddVelo(List<Modele> m)
         {
             this.modeles = m;
         }
-
-        ////2.Produire la liste des membres pour chaque programme d’adhésion.
-        //static void ListeMembres(MySqlConnection connection)
-        //{
-        //    connection.Open();
-        //    MySqlCommand command = connection.CreateCommand();
-        //    command.CommandText = "select * from individu i  group by id,numero;";
-        //    MySqlDataReader reader;
-        //    reader = command.ExecuteReader();
-        //}
-
 
         /// <summary>
         /// Méthode qui retourne le nombre de clients de VeloMax
@@ -90,26 +81,28 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine(pieces[i].ToString());
                 }
             }
-            
-        }
 
-        public void ListeMembres(MySqlConnection connection)
-        {
-            //var individusGroupedByNumero = individus.GroupJoin(individu => individu.Numero);
-
-
-           var individusGroupedByNumero = individus.GroupBy(individu => individu.Numero);
-            
-            //var ProgrammeFidelio = fidelios.GroupBy()
-            //fidelios.GroupJoin(fidelios, individus.Numero);
-            foreach (var groupe in individusGroupedByNumero)
+            for (int i = 0; i <= modeles.Count(); i++)
             {
-                Console.WriteLine("Programme d'adhésion" + groupe.Key);
-                foreach(var ind in groupe)
+                if (modeles[i].Stock <= 2)
                 {
-                    Console.WriteLine(ind.ToString());
+                    Console.WriteLine(modeles[i].ToString());
                 }
             }
+        }
+
+        //2.Produire la liste des membres pour chaque programme d’adhésion.
+        public void ListeMembres(MySqlConnection connection)
+        {
+
+            //foreach (var groupe in individusGroupedByNumero)
+            //{
+            //    Console.WriteLine("Programme d'adhésion" + groupe.Key);
+            //    foreach(var ind in groupe)
+            //    {
+            //        Console.WriteLine(ind.ToString());
+            //    }
+            //}
 
             List<Object> Members = new List<Object>();
             connection.Open();
@@ -139,8 +132,9 @@ namespace ProjetBDD_VeloMax
                 courrielI = reader.GetString(5);
                 numero = reader.GetInt32(6);
                 descriptionf = reader.GetString(7);
-                duree = $"{reader.GetInt32(8)} an";
-              //  Members.Add(new Object(id, nomI, prenom, telephoneI, adresseI, courrielI, numero, descriptionf));
+                duree = $"{reader.GetString(8)} an";
+                Console.WriteLine(" ");
+               // Members.Add(new Object(id, nomI, prenom, telephoneI, adresseI, courrielI, numero, descriptionf));
             }
             connection.Close();
         }
@@ -242,7 +236,7 @@ namespace ProjetBDD_VeloMax
             string ligne;
             DateTime date_intro;
             DateTime date_sortie;
-            int stockM;
+            int stockM=0;
 
             while (reader.Read())// parcours ligne par ligne
             {
@@ -253,10 +247,10 @@ namespace ProjetBDD_VeloMax
                 ligne = reader.GetString(4);
                 date_intro = ConversionDateTime(reader.GetString(5));
                 date_sortie = ConversionDateTime(reader.GetString(6));
-                stockM = reader.GetInt32(7);
+        //        stockM = reader.GetInt32(7);
                 modeles.Add(new Modele(numM, nomVelo, grandeur, prix, date_intro, date_sortie,stockM));
             }
-            connection.Close();     
+            connection.Close();
         }
 
         /// <summary>
