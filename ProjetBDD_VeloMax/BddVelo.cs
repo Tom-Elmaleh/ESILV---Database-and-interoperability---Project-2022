@@ -433,6 +433,7 @@ namespace ProjetBDD_VeloMax
             string adresseF;
             string contactF;
             int libelle;
+            int stockF;
 
             while (reader.Read())// parcours ligne par ligne
             {
@@ -441,7 +442,8 @@ namespace ProjetBDD_VeloMax
                 adresseF= reader.GetString(2);
                 contactF= reader.GetString(3);
                 libelle= reader.GetInt32(4);
-                fournisseurs.Add(new Fournisseur(siret,nomF,adresseF,contactF,libelle));
+                stockF = reader.GetInt32(5);
+                fournisseurs.Add(new Fournisseur(siret,nomF,adresseF,contactF,libelle,stockF));
             }
             connection.Close();
         }
