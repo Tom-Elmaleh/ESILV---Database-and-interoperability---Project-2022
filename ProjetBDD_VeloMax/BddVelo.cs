@@ -64,14 +64,17 @@ namespace ProjetBDD_VeloMax
         /// <summary>
         /// Méthode qui retourne le nombre de clients de VeloMax
         /// </summary>
+        #region NombreClients
         public void NombredeClients()
         {
             Console.WriteLine($"Il y a {individus.Count()} clients particuliers et {entreprises.Count()} clients entreprises");
         }
+        #endregion
 
         /// <summary>
         /// Méthode qui retourne le nombre de pices dont le stock
         /// </summary>
+        #region ProduitStock2
         public void ProduitStock2()
         {
             for (int i=0;i<=pieces.Count();i++)
@@ -90,8 +93,10 @@ namespace ProjetBDD_VeloMax
                 }
             }
         }
+        #endregion
 
         //2.Produire la liste des membres pour chaque programme d’adhésion.
+        #region ListMembres
         public void ListeMembres(MySqlConnection connection)
         {
 
@@ -138,7 +143,9 @@ namespace ProjetBDD_VeloMax
             }
             connection.Close();
         }
+        #endregion
 
+        #region ConversionDateTime
         static DateTime ConversionDateTime(string date)
         {
 
@@ -148,7 +155,9 @@ namespace ProjetBDD_VeloMax
 
             return convDate;
         }
+        #endregion
 
+        #region Delete
         public void Delete(MySqlConnection connection,string table,string key,string id)
         {
             connection.Open();
@@ -157,7 +166,9 @@ namespace ProjetBDD_VeloMax
             connection.Close();
             Choose(connection, table);
         }
+        #endregion
 
+        #region Choose
         public void Choose(MySqlConnection connection,string table)
         {
             switch (table)
@@ -192,7 +203,9 @@ namespace ProjetBDD_VeloMax
                     break;
             }
         }
+        #endregion
 
+        #region Creer
         public void Creer(MySqlConnection connection, string table, string valeurs)
         {
             connection.Open();
@@ -203,7 +216,9 @@ namespace ProjetBDD_VeloMax
             connection.Close();
             Choose(connection, table);
         }
+        #endregion
 
+        #region MAJ
         public void MAJ(MySqlConnection connection,string table,string maj,string condition)
         {
             connection.Open();
@@ -214,12 +229,14 @@ namespace ProjetBDD_VeloMax
             connection.Close();
             Choose(connection,table);
         }
-
+        #endregion
 
         /// <summary>
         /// Cette méthode recrée la liste de modèles via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>
         /// <param name="connection"></param>
+
+        #region LectureModele
         public void LectureModele(MySqlConnection connection)
         {
              modeles.Clear();
@@ -252,11 +269,13 @@ namespace ProjetBDD_VeloMax
             }
             connection.Close();
         }
-
+        #endregion
         /// <summary>
         /// Cette méthode recrée la liste des pièces via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>
         /// <param name="connection"></param>
+
+        #region LecturePiece
         public void LecturePiece(MySqlConnection connection)
         {
             modeles.Clear();
@@ -285,11 +304,13 @@ namespace ProjetBDD_VeloMax
             }
             connection.Close();
         }
-
+        #endregion
         /// <summary>
         /// Cette méthode recrée la liste des clients individu via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>
         /// <param name="connection"></param>
+
+        #region LectureIndividu
         public void LectureIndividu(MySqlConnection connection)
         {
             individus.Clear();
@@ -320,11 +341,12 @@ namespace ProjetBDD_VeloMax
             }
             connection.Close();
         }
-
+        #endregion
         /// <summary>
         /// Cette méthode recrée la liste des clients entreprises via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>
         /// <param name="connection"></param>
+         #region LectureEntreprises
         public void LectureEntreprises(MySqlConnection connection)
         {
             entreprises.Clear();
@@ -355,11 +377,13 @@ namespace ProjetBDD_VeloMax
             }
             connection.Close();
         }
-
+        #endregion
         /// <summary>
         /// Cette méthode recrée la liste des commandes via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>
         /// <param name="connection"></param>
+
+        #region LectureCommande
         public void LectureCommande(MySqlConnection connection)
         {
             commandes.Clear();
@@ -388,11 +412,13 @@ namespace ProjetBDD_VeloMax
             }
             connection.Close();
         }
-
+        #endregion
         /// <summary>
         /// Cette méthode recrée la liste des commandes via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>
         /// <param name="connection"></param>
+        /// 
+        #region LectureFournisseur
         public void LectureFournisseur(MySqlConnection connection)
         {
             fournisseurs.Clear();
@@ -419,11 +445,13 @@ namespace ProjetBDD_VeloMax
             }
             connection.Close();
         }
-
+        #endregion
         /// <summary>
         /// Cette méthode recrée la liste des commandes via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>
         /// <param name="connection"></param>
+
+        #region LectureAssemblage
         public void LectureAssemblage(MySqlConnection connection)
         {
             assemblages.Clear();
@@ -445,11 +473,14 @@ namespace ProjetBDD_VeloMax
             connection.Close();
         }
 
-
+        #endregion
         /// <summary>
         /// Cette méthode recrée la liste des contenus_modèles via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>
         /// <param name="connection"></param>
+
+        #region LectureContenu_M
+
         public void LectureContenu_M(MySqlConnection connection)
         {
             contenus_M.Clear();
@@ -472,11 +503,14 @@ namespace ProjetBDD_VeloMax
             connection.Close();
         }
 
-
+        #endregion
         /// <summary>
         /// Cette méthode recrée la liste des contenus_pièces via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>
         /// <param name="connection"></param>
+
+        #region LectureContenu_P
+
         public void LectureContenu_P(MySqlConnection connection)
         {
             contenus_P.Clear();
@@ -499,10 +533,13 @@ namespace ProjetBDD_VeloMax
             connection.Close();
         }
 
+        #endregion
         /// <summary>
         /// Cette méthode recrée la liste des comptes fidelios via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>
         /// <param name="connection"></param>
+
+        #region LectureFidelio
         public void LectureFidelio(MySqlConnection connection)
         {
             fidelios.Clear();
@@ -530,10 +567,13 @@ namespace ProjetBDD_VeloMax
             connection.Close();
         }
 
+        #endregion
         /// <summary>
         /// Cette méthode recrée la liste des productions via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>
         /// <param name="connection"></param>
+
+        #region LectureProduction
         public void LectureProduction(MySqlConnection connection)
         {
             productions.Clear();
@@ -554,12 +594,14 @@ namespace ProjetBDD_VeloMax
             }
             connection.Close();
         }
-
+        #endregion
         //string numP,string siret,DateTime date_introP,DateTime date_sortieP
         /// <summary>
         /// Cette méthode recrée la liste des commandes via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>
         /// <param name="connection"></param>
+
+        #region LectureLivraison
         public void LectureLivraison(MySqlConnection connection)
         {
             livraisons.Clear();
@@ -584,6 +626,7 @@ namespace ProjetBDD_VeloMax
             }
             connection.Close();
         }
+        #endregion
     }
 }
 
