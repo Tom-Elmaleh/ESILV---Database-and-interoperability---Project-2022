@@ -152,29 +152,41 @@ namespace ProjetBDD_VeloMax
 
         public void Menu()
         {
-            /*
-             * 
-             * 
-             *  Mettre un cas pour changer de user si possible dans le menu
-             * 
-             * */
-
-
+            // Export des stocks faibles avec fournisseurs pour command en XML 
             Console.WriteLine("\n Définir le nom du user ?"); // root ou bozo 
             string user = Console.ReadLine();
             MySqlConnection maConnexion = Connection(user);
             BddVelo bdd = new BddVelo(maConnexion);
-           // bdd.ListeMembres(maConnexion);
+
+            //bdd.ListeMembres(maConnexion);
             
+            // Export des stocks faibles avec fournisseurs pour command en XML
+
+            
+
             //XmlSerializer xs = new XmlSerializer(typeof(Piece));
             //StreamWriter wr = new StreamWriter("bdd.xml");
 
-           string path= "C:/Users/user/Downloads";
+           string path = "C:/Users/user/Downloads";
             var writer = new System.Xml.Serialization.XmlSerializer(typeof(List<Piece>));
             var file = new StreamWriter(path);
             writer.Serialize(file, bdd.Pieces);
             file.Close();
-  
+
+
+            //BD bd11 = new BD("978-2203001169", "On a marché sur la Lune", 62);
+            //Console.WriteLine(bd11);  // affichage pour débug
+
+            //// Code pour sérialiser l'objet bd11 en XML dans un fichier "bd11.xml"
+            //XmlSerializer xs = new XmlSerializer(typeof(BD));  // l'outil de sérialisation
+            //StreamWriter wr = new StreamWriter("bd11.xml");  // accès en écriture à un fichier (texte)
+            //xs.Serialize(wr, bd11); // action de sérialiser en XML l'objet bd11 
+            //                        // et d'écrire le résultat dans le fichier manipulé par wr
+            //wr.Close();
+            //Console.WriteLine("sérialisation dans fichier bd11.xml terminée");
+
+            //// vérifier le contenu du fichier "bd11.xml" dans le dossier bin\Debug de Visual Studio.
+
         }
     }
 }
