@@ -8,13 +8,13 @@ namespace ProjetBDD_VeloMax
 {
     class Entreprise
     {
-        private string nomE { get; set; }
-        private string telephoneE { get; set; }
-        private string adresseE { get; set; }
-        private string courrielE { get; set; }
-        private string contactE { get; set; }
-        private int volume_achat { get; set; }
-        private float remise { get; set; }
+        private string nomE;
+        private string telephoneE;
+        private string adresseE;
+        private string courrielE;
+        private string contactE;
+        private int volume_achat;
+        private float remise;
 
         public Entreprise(string nomE,string telephoneE, string adresseE, string courrielE, string contactE, int volume_achat, float remise)
         {

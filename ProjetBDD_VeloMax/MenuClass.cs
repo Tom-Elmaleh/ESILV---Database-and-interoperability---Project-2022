@@ -8,23 +8,14 @@ using System.Xml;
 using System.Xml.XPath;
 using System.IO;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
+
 
 
 namespace ProjetBDD_VeloMax
 {
     class MenuClass 
     {
-
-
-        //    Console.WriteLine("\nListe des modèles\n");
-
-        //    foreach (Modele element in modeles)
-        //    {
-        //        Console.WriteLine(element.ToString());
-        //    }
-        //    connection.Close();
-        //    return modeles;
-        //}
 
         public string [] Ajouter()
         {
@@ -158,35 +149,44 @@ namespace ProjetBDD_VeloMax
             MySqlConnection maConnexion = Connection(user);
             BddVelo bdd = new BddVelo(maConnexion);
 
+
             //bdd.ListeMembres(maConnexion);
-            
+
             // Export des stocks faibles avec fournisseurs pour command en XML
 
-            
+            //Instanciation des objets			
+            List<Fournisseur> liste = bdd.Fournisseurs;
+            XmlSerializer xs = new XmlSerializer(typeof(List<Fournisseur>));
+            StreamWriter wr = new StreamWriter("bdd.liste.xml");
 
-            //XmlSerializer xs = new XmlSerializer(typeof(Piece));
-            //StreamWriter wr = new StreamWriter("bdd.xml");
+            //sérialisation de bdtheque
+            xs.Serialize(wr, liste);
 
-           string path = "C:/Users/user/Downloads";
-            var writer = new System.Xml.Serialization.XmlSerializer(typeof(List<Piece>));
-            var file = new StreamWriter(path);
-            writer.Serialize(file, bdd.Pieces);
-            file.Close();
+            wr.Close();
+            Console.WriteLine("Export des stock faibles avec fournisseurs en XML terminée");
 
 
-            //BD bd11 = new BD("978-2203001169", "On a marché sur la Lune", 62);
-            //Console.WriteLine(bd11);  // affichage pour débug
+            //Export des clients dont le programme de fidélité arrive à expiration dans moins de 2 mois avec historique
+            //des abonnements afin de les relancer en JSON
 
-            //// Code pour sérialiser l'objet bd11 en XML dans un fichier "bd11.xml"
-            //XmlSerializer xs = new XmlSerializer(typeof(BD));  // l'outil de sérialisation
-            //StreamWriter wr = new StreamWriter("bd11.xml");  // accès en écriture à un fichier (texte)
-            //xs.Serialize(wr, bd11); // action de sérialiser en XML l'objet bd11 
-            //                        // et d'écrire le résultat dans le fichier manipulé par wr
-            //wr.Close();
-            //Console.WriteLine("sérialisation dans fichier bd11.xml terminée");
+            ////fichier destinataire de la sérialisation
+            string fileToWrite = "Clients.json";
 
-            //// vérifier le contenu du fichier "bd11.xml" dans le dossier bin\Debug de Visual Studio.
+            ////instanciation des objets <Individus>
+            List<Individu> inds = bdd.Individus;
 
+
+            ////instanciation des flux d'écriture(writer)
+            StreamWriter fileWriter = new StreamWriter(fileToWrite);
+            JsonTextWriter jsonWriter = new JsonTextWriter(fileWriter);
+
+            //// sérialisation des objets vers le flux d'écriture fichier
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.Serialize(jsonWriter, inds);
+
+            ////fermeture des flux (writer)
+            jsonWriter.Close();
+            fileWriter.Close();
         }
     }
 }

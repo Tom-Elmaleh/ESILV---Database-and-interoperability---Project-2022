@@ -31,10 +31,10 @@ namespace ProjetBDD_VeloMax
         public List<Contenu_Piece> Contenu_Pieces { get { return contenus_P; } set { value = contenus_P; } }
         private List<Fidelio> fidelios = new List<Fidelio>();
         public List<Fidelio> Fidelios { get { return fidelios; } set { value = fidelios; } }
-        private List<Production> productions = new List<Production>();
-        public List<Production> Productions { get { return productions; } set { value = productions; } }
-        private List<Livraison> livraisons = new List<Livraison>();
-        public List<Livraison> Livraisons { get { return livraisons; } set { value = livraisons; } }
+        private List<Livraison> productions = new List<Livraison>();
+        public List<Livraison> Productions { get { return productions; } set { value = productions; } }
+        private List<Production> livraisons = new List<Production>();
+        public List<Production> Livraisons { get { return livraisons; } set { value = livraisons; } }
 
 
         public BddVelo(MySqlConnection connexion)
@@ -592,7 +592,7 @@ namespace ProjetBDD_VeloMax
             {
                 numP = reader.GetString(0);
                 siret = reader.GetString(1);                
-                productions.Add(new Production(numP,siret));
+                productions.Add(new Livraison(numP,siret));
             }
             connection.Close();
         }
@@ -624,7 +624,7 @@ namespace ProjetBDD_VeloMax
                 date_sortieP = ConversionDateTime(reader.GetString(1));
                 numP = reader.GetString(2);
                 siret = reader.GetString(3);
-                livraisons.Add(new Livraison(date_introP,date_sortieP, numP, siret));
+                livraisons.Add(new Production(date_introP,date_sortieP, numP, siret));
             }
             connection.Close();
         }

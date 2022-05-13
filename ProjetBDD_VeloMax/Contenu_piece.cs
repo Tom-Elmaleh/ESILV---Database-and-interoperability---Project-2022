@@ -8,9 +8,9 @@ namespace ProjetBDD_VeloMax
 {
     class Contenu_Piece
     {
-        private int quantiteP { get; set; }
-        private string numP { get; set; }
-        private int numC { get; set; }
+        private int quantiteP;
+        private string numP;
+        private int numC;
 
         public Contenu_Piece(int quantiteP,string numP,int numC)
         {

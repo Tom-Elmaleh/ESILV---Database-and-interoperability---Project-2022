@@ -8,21 +8,16 @@ namespace ProjetBDD_VeloMax
 {
     class Modele
     {
-        private int numM { get; set; }
-        private string nomVelo { get; set; }
-        private string grandeur { get; set; }
-        private int prix { get; set; }
-        private string ligne { get; set; }
-        private DateTime date_introV { get; set; }
-        private DateTime date_sortieV { get; set; }
-        private int stockM { get; set; }
+        private int numM;
+        private string nomVelo;
+        private string grandeur;
+        private int prix;
+        private string ligne;
+        private DateTime date_introV;
+        private DateTime date_sortieV;
+        private int stockM;
 
-        public int Stock { get { return stockM; } set { stockM = value; } }  
-
-        public Modele()
-        {
-            // pour le XML
-        }
+        public int Stock { get { return stockM; } set { stockM = value; } }
 
         public Modele(int numM,string nomVelo,string grandeur,int prix,DateTime date_introV, DateTime date_sortieV,int stockM)
         {

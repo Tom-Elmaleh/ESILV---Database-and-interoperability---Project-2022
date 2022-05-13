@@ -8,18 +8,24 @@ namespace ProjetBDD_VeloMax
 {
     class Individu
     {
-        private int id { get; set; }
-        private string nomI { get; set; }
-        private string prenom { get; set; }
-        private string telephoneI { get; set; }
-        private string adresseI { get; set; }
-        private string courrielI { get; set; }
-        private int numero { get; set; }
+        private int id;
+        private string nomI;
+        private string prenom;
+        private string telephoneI;
+        private string adresseI;
+        private string courrielI;
+        private int numero;
+        private DateTime date_adhesion; 
 
-        public int Numero { get; set; }
+        //Export des clients dont le programme de fidélité arrive à expiration dans moins de 2 mois avec historique 
+        //des abonnements afin de les relancer en JSON
 
+        public int ID { get { return id; } set { id = value; } }
+        public string Nom { get { return nomI; } set { nomI = value; } }
+        public string Prenom { get { return prenom; } set { prenom = value; } }
+        public int Numero { get { return numero; } set { numero = value; } }
 
-        public Individu(int id,string nomI,string prenom,string telephoneI,string adresseI,string courrielI,int numero)
+        public Individu(int id,string nomI,string prenom,string telephoneI,string adresseI,string courrielI,int numero/*,DateTime date_adhesion*/)
         {
             this.id = id;
             this.nomI = nomI;
@@ -28,11 +34,25 @@ namespace ProjetBDD_VeloMax
             this.adresseI = adresseI;
             this.courrielI = courrielI;
             this.numero = numero;
+            // this.date_adhesion=date_adhesion
         }
 
         public override string ToString()
         {
-            return $" {id} {nomI} {prenom} {telephoneI} {adresseI} {courrielI} ";
+            return id + nomI + prenom + numero;
+
+            // Il faut rajouter historique des abonnements si expiration < 2 mois
+            
+        }
+
+        static DateTime ConversionDateTime(string date)
+        {
+
+            string[] tab = date.Split('/');
+
+            DateTime convDate = new DateTime(Convert.ToInt32("20" + tab[2]), Convert.ToInt32(tab[1]), Convert.ToInt32(tab[0]));
+
+            return convDate;
         }
     }
 }

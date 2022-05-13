@@ -8,8 +8,8 @@ namespace ProjetBDD_VeloMax
 {
     class Assemblage
     {
-        private int numM { get; set; }
-        private string numP { get; set; }
+        private int numM; 
+        private string numP;
         
         public Assemblage(int numM,string numP)
         {

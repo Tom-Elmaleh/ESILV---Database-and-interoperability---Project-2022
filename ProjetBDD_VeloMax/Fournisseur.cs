@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjetBDD_VeloMax
 {
-    class Fournisseur
+    public class Fournisseur
     {
         private string siret;
         private string nomF;
