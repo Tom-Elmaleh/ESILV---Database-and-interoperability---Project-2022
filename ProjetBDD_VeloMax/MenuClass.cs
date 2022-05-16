@@ -20,12 +20,12 @@ namespace ProjetBDD_VeloMax
         public string [] Ajouter()
         {
             Console.WriteLine("\nQue voulez vous créer :" +
-              "\nFournisseur (fournisseur)" +
-              "\nPièce(piece)" +
-              "\nCommande(commande)"
-              + "\nModèle (modele)"
-              + "\nclient Individu (individu)" +
-              "\nclient Entreprise (entreprise)");
+              "\nA. Fournisseur (fournisseur)" +
+              "\nB. Pièce(piece)" +
+              "\nC. Commande(commande)"
+              + "\nD. Modèle (modele)"
+              + "\nE. client Individu (individu)" +
+              "\nF. client Entreprise (entreprise)");
             string table = Console.ReadLine();
             Console.WriteLine("\nIndiquer les valeurs pour chacun des attributs à la manière d'une requête SQL (adapter selon les types) ? ");
             string valeurs = Console.ReadLine();

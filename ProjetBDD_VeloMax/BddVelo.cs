@@ -299,7 +299,8 @@ namespace ProjetBDD_VeloMax
             int cptModele = 0;
 
             MySqlCommand commandModele = connection.CreateCommand();
-            command.CommandText = "select sum(PrixP) from commande natural join contenu_modele natural join modele natural join piece natural join assemblage group by numC;";
+//command.CommandText = "select sum(PrixP) from commande natural join contenu_modele natural join modele natural join piece natural join assemblage group by numC;";
+            command.CommandText = "select prix*quantiteM from commande natural join contenu_modele natural join modele;";
             MySqlDataReader readerModele;
             readerModele = commandModele.ExecuteReader();
 
