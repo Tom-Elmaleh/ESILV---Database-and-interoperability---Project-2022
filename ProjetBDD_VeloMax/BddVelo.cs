@@ -145,6 +145,234 @@ namespace ProjetBDD_VeloMax
         }
         #endregion
 
+        #region RapportStat
+        public Tuple<List<Tuple<Modele, int>>> RapportStat(MySqlConnection connection)
+        {
+            var liste_Modele_Vendus = new List<Tuple<Modele, int>>();
+            var liste_Piece_Vendues = new List<Tuple<Piece, int>>();
+
+            int nbModele = 0;
+            int nbPiece = 0;
+
+            connection.Open();
+            MySqlCommand commandModele = connection.CreateCommand();
+            commandModele.CommandText = "select modele.*, sum(quantiteM) from contenu_modele natural join modele group by  numM;";
+            MySqlDataReader readerModele;
+            readerModele = commandModele.ExecuteReader();
+
+            int numM;
+            string nomVelo;
+            string grandeur;
+            int prix;
+            string ligne;
+            DateTime date_intro;
+            DateTime date_sortie;
+            int stockM = 0;
+
+            string numP;
+            string descriptionP;
+            int num_catalogue;
+            int delai;
+            int stock;
+            int prixP;
+
+            while (readerModele.Read())// parcours ligne par ligne
+            {
+                numM = readerModele.GetInt32(0);
+                nomVelo = readerModele.GetString(1);
+                grandeur = readerModele.GetString(2);
+                prix = readerModele.GetInt32(3);
+                ligne = readerModele.GetString(4);
+                date_intro = ConversionDateTime(readerModele.GetString(5));
+                date_sortie = ConversionDateTime(readerModele.GetString(6));
+                nbModele = readerModele.GetInt32(7);
+                //stockM = reader.GetInt32(7);
+
+                Modele modele0 = new Modele(numM, nomVelo, grandeur, prix, date_intro, date_sortie, stockM);
+                var monTupleModele = Tuple.Create(modele0, nbModele);
+                liste_Modele_Vendus.Add(monTupleModele);
+            }
+
+
+            MySqlCommand commandPiece = connection.CreateCommand();
+            commandPiece.CommandText = "select  piece.* ,sum(quantiteP)from contenu_piece  natural join piece  group by  numP;";
+            MySqlDataReader readerPiece;
+            readerPiece = commandPiece.ExecuteReader();
+
+            while (readerPiece.Read())// parcours ligne par ligne
+            {
+                numP = readerPiece.GetString(0);
+                descriptionP = readerPiece.GetString(1);
+                num_catalogue = readerPiece.GetInt32(2);
+                delai = readerPiece.GetInt32(3);
+                stock = readerPiece.GetInt32(4);
+                prixP = readerPiece.GetInt32(5);
+                nbPiece = readerPiece.GetInt32(6);
+
+                //        stock = reader.GetInt32(6);
+                Piece piece0 = new Piece(numP, descriptionP, num_catalogue, delai, stock, prixP);
+                var monTuplePiece = Tuple.Create(piece0, nbPiece);
+                liste_Piece_Vendues.Add(monTuplePiece);
+            }
+            connection.Close();
+
+            List<Tuple<object, int>>[] res = [liste_Modele_Vendus, liste_Piece_Vendues];
+
+            return res;
+        }
+        #endregion
+
+        #region Date_Expiration
+        public List<Tuple<Individu, DateTime>> Date_Expiration(MySqlConnection connection)
+        {
+            var liste_date_expi = new List<Tuple<Individu, DateTime>>();
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select individu.*,date_adhesion, duree from individu natural join fidelio where date_adhesion is not null;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+
+            int id;
+            string nomI;
+            string prenom;
+            string telephoneI;
+            string adresseI;
+            string courrielI;
+            int numero;
+            string descriptionf;
+            DateTime date_adhesion;
+            int duree;
+            DateTime date_expiration;
+
+
+            while (reader.Read())// parcours ligne par ligne
+            {
+                id = reader.GetInt32(0);
+                nomI = reader.GetString(1);
+                prenom = reader.GetString(2);
+                telephoneI = reader.GetString(3);
+                adresseI = reader.GetString(4);
+                courrielI = reader.GetString(5);
+                numero = reader.GetInt32(6);
+                descriptionf = reader.GetString(7);
+                date_adhesion = ConversionDateTime(reader.GetString(8));
+                duree = reader.GetInt32(9);
+
+                date_expiration = date_adhesion.AddYears(duree);
+                Individu indiv = new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero);
+                var monTuple = Tuple.Create(indiv, date_expiration);
+                liste_date_expi.Add(monTuple);
+            }
+
+
+            connection.Close();
+
+            return liste_date_expi;
+        }
+        #endregion
+
+        #region Moyennes
+        public int Moyenne_Montant(MySqlConnection connection)
+        {
+
+
+
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select PrixP*quantiteP from commande natural join contenu_piece natural join piece;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+
+            int moyPrixPieceParCommande = 0;
+            int cptPiece = 0;
+            int nbPrixPieceParCommande;
+
+            while (reader.Read())// parcours ligne par ligne
+            {
+                nbPrixPieceParCommande = reader.GetInt32(0);
+                moyPrixPieceParCommande += nbPrixPieceParCommande;
+                cptPiece++;
+
+            }
+
+            int moyModele = 0;
+            int cptModele = 0;
+
+            MySqlCommand commandModele = connection.CreateCommand();
+            command.CommandText = "select sum(PrixP) from commande natural join contenu_modele natural join modele natural join piece natural join assemblage group by numC;";
+            MySqlDataReader readerModele;
+            readerModele = commandModele.ExecuteReader();
+
+            int nbPrixModeleParCommande = 0;
+
+            while (reader.Read())// parcours ligne par ligne
+            {
+                nbPrixModeleParCommande = reader.GetInt32(0);
+                moyModele += nbPrixModeleParCommande;
+                cptModele++;
+            }
+
+            int moyenneTotale = (moyPrixPieceParCommande + moyModele) / (cptModele + cptPiece);
+
+
+            connexion.Close();
+
+            return moyenneTotale;
+        }
+        public int Moyenne_Piece(MySqlConnection connection)
+        {
+            int moy = 0;
+            int cpt = 0;
+
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select count(numP)* quantiteP from piece natural join contenu_piece natural join commande group by NumC;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+
+            int nbPieceParCommande;
+
+            while (reader.Read())// parcours ligne par ligne
+            {
+                nbPieceParCommande = reader.GetInt32(0);
+                moy += nbPieceParCommande;
+                cpt += 1;
+            }
+            connection.Close();
+            moy = moy / cpt;
+
+            return moy;
+        }
+
+        public int Moyenne_Modele(MySqlConnection connection)
+        {
+            int moy = 0;
+            int cpt = 0;
+
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select count(numM)*quantiteM from modele natural join contenu_modele natural join commande group by NumC;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+
+            int nbModeleParCommande;
+
+            while (reader.Read())// parcours ligne par ligne
+            {
+                nbModeleParCommande = reader.GetInt32(0);
+                moy += nbModeleParCommande;
+                cpt += 1;
+            }
+            connection.Close();
+            moy = moy / cpt;
+
+            return moy;
+
+
+
+        }
+        #endregion
+
         #region ConversionDateTime
         static DateTime ConversionDateTime(string date)
         {
