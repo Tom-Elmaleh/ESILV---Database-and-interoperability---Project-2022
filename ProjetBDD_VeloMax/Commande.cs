@@ -45,16 +45,21 @@ namespace ProjetBDD_VeloMax
         public override string ToString()
         {
             string resul = "";
-            if(id == -1)
+            if (id == -1)
             {
-                resul = $"NumCommande : {numC} | Date_Commande : {dateC} | Date_Livraison :  {dateLivraison} | Adresse : {adresseC} | nom_Entreprise : {nomE}";
+                resul = $"NumCommande : {numC} | Date_Livraison : {AffichageDate(dateLivraison)} | Adresse : {adresseC} | nom_Entreprise : {nomE}";
             }
 
             else
             {
-                resul = $"NumCommande : {numC} | Date_Commande : {dateC} | Date_Livraison : {dateLivraison} | Adresse : {adresseC} | Id_Individu : {id}";
+                resul = $"NumCommande : {numC} | Date_Livraison : {AffichageDate(dateLivraison)} | Adresse : {adresseC} | Id_Individu : {id}";
             }
             return resul;
+        }
+
+        public string AffichageDate(DateTime date)
+        {
+            return $"{Convert.ToString(date.Day)}/{Convert.ToString(date.Month)}/{Convert.ToString(date.Year)}";
         }
     }
 }

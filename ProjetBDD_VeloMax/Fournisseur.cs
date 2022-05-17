@@ -17,12 +17,12 @@ namespace ProjetBDD_VeloMax
 
         public string Siret { get { return siret; } set { siret = value; } } // xml
         public string Nom { get { return nomF; } set { nomF = value; } }     // xml
-        public string Adresse { get { return adresseF; } set { adresseF = value; } } 
+        public string Adresse { get { return adresseF; } set { adresseF = value; } }
         public string Contact { get { return contactF; } set { contactF = value; } }
         public int Libelle { get { return libelle; } set { libelle = value; } }
         public int Stock { get { if (stockF < 10) return stockF; else return -1; } set { stockF = value; } } // xml
 
-        public Fournisseur(string siret,string nomF,string adresseF,string contactF,int libelle,int stockF)
+        public Fournisseur(string siret, string nomF, string adresseF, string contactF, int libelle, int stockF)
         {
             this.siret = siret;
             this.nomF = nomF;
@@ -33,7 +33,7 @@ namespace ProjetBDD_VeloMax
         }
 
         public Fournisseur(string siret, string nomF, int stockF)
-           : this(siret,nomF,"","",-1, stockF)
+           : this(siret, nomF, "", "", -1, stockF)
         {
         }
 

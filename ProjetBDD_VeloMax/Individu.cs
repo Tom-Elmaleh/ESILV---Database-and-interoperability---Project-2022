@@ -30,6 +30,19 @@ namespace ProjetBDD_VeloMax
         public DateTime Date_Adhesion { get { return date_adhesion; } set { date_adhesion = value; } }
         public DateTime Date_Expiration { get { return date_expiration; } set { date_expiration = value; } }
 
+        public Individu(int id, string nomI, string prenom, string telephoneI, string adresseI, string courrielI, int numero, DateTime date_adhesion)
+        {
+            this.id = id;
+            this.nomI = nomI;
+            this.prenom = prenom;
+            this.telephoneI = telephoneI;
+            this.adresseI = adresseI;
+            this.courrielI = courrielI;
+            this.numero = numero;
+            this.date_adhesion = date_adhesion;
+            date_expiration = Date_Expi(connection);
+        }
+
         public Individu(int id, string nomI, string prenom, string telephoneI, string adresseI, string courrielI, int numero, DateTime date_adhesion, DateTime date_expiration)
         {
             this.id = id;
@@ -82,10 +95,38 @@ namespace ProjetBDD_VeloMax
             return maConnexion;
         }
 
+
+        #region Date_Expiration
+        public DateTime Date_Expi(MySqlConnection connection)
+        {
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select duree from individu natural join fidelio where date_adhesion is not null;";
+
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+            int duree = 0;
+            DateTime date_expi;
+            while (reader.Read())// parcours ligne par ligne
+            {
+                duree = reader.GetInt32(0);
+            }
+            connection.Close();
+
+            date_expi = date_adhesion.AddYears(duree);
+            return date_expi;
+        }
+        #endregion
+
         public string AfficherIndividu()
         {
-            return $"ID : {id} | Nom : {nomI} | Prenom : {prenom} | Telephone : {telephoneI} | Adresse : {adresseI} | Courriel {courrielI}"
-            + $"NumeroF {numero} | Date_adhesion {date_adhesion}";
+            return $"ID : {id} | Nom : {nomI} | Prenom : {prenom} | Telephone : {telephoneI} | Adresse : {adresseI} |"
+            + $"| NumeroF : {numero} | Date expiration : {AffichageDate(date_expiration)}";
+        }
+
+        public string AffichageDate(DateTime date)
+        {
+            return $"{Convert.ToString(date.Day)}/{Convert.ToString(date.Month)}/{Convert.ToString(date.Year)}";
         }
     }
 }

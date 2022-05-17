@@ -64,7 +64,7 @@ namespace ProjetBDD_VeloMax
         {
             foreach (Modele modele in modeles)
             {
-                modele.ToString();
+                Console.WriteLine(modele.ToString());
             }
         }
         #endregion
@@ -74,7 +74,7 @@ namespace ProjetBDD_VeloMax
         {
             foreach (Piece piece in pieces)
             {
-                piece.ToString();
+                Console.WriteLine(piece.ToString());
             }
         }
         #endregion
@@ -84,7 +84,7 @@ namespace ProjetBDD_VeloMax
         {
             foreach (Fournisseur fournisseur in fournisseurs)
             {
-                fournisseur.Afficher();
+                Console.WriteLine(fournisseur.Afficher());
             }
         }
         #endregion
@@ -94,7 +94,7 @@ namespace ProjetBDD_VeloMax
         {
             foreach (Commande commande in commandes)
             {
-                commande.ToString();
+                Console.WriteLine(commande.ToString());
             }
         }
         #endregion
@@ -104,7 +104,7 @@ namespace ProjetBDD_VeloMax
         {
             foreach (Entreprise entreprise in entreprises)
             {
-                entreprise.ToString();
+                Console.WriteLine(entreprise.ToString());
             }
         }
         #endregion
@@ -114,7 +114,7 @@ namespace ProjetBDD_VeloMax
         {
             foreach (Individu individu in individus)
             {
-                individu.AfficherIndividu();
+                Console.WriteLine(individu.AfficherIndividu());
             }
         }
         #endregion
@@ -499,7 +499,7 @@ namespace ProjetBDD_VeloMax
                 prixP = readerPiece.GetInt32(5);
                 nbPiece = readerPiece.GetInt32(6);
 
-                //        stock = reader.GetInt32(6);
+                //  stock = reader.GetInt32(6);
                 Piece piece0 = new Piece(numP, descriptionP, num_catalogue, delai, stock, prixP);
                 var monTuplePiece = Tuple.Create(piece0, nbPiece);
                 liste_Piece_Vendues.Add(monTuplePiece);

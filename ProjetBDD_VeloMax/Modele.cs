@@ -19,8 +19,8 @@ namespace ProjetBDD_VeloMax
 
 
         public int NumM { get { return numM; } set { numM = value; } }
-        public string NomVelo {  get { return nomVelo;} set { nomVelo = value; } }
-        public string Grandeur {  get { return grandeur; } set { grandeur = value; } }
+        public string NomVelo { get { return nomVelo; } set { nomVelo = value; } }
+        public string Grandeur { get { return grandeur; } set { grandeur = value; } }
         public int Prix { get { return prix; } set { prix = value; } }
         public string Ligne { get { return ligne; } set { ligne = value; } }
         public DateTime Date_Intro { get { return date_introV; } set { date_introV = value; } }
@@ -42,7 +42,12 @@ namespace ProjetBDD_VeloMax
         public override string ToString()
         {
             return $"numM : {numM} | NomVelo : {nomVelo} | Grandeur : {grandeur} | Prix : {prix}|" +
-            $"Ligne : {ligne} | Date_intro : {date_introV} | Date_sortie : {date_sortieV} | stock : {stockM}";
+            $"Ligne : {ligne} | Date_intro : {AffichageDate(date_introV)} | Date_sortie : {AffichageDate(date_sortieV)} | stock : {stockM}";
+        }
+
+        public string AffichageDate(DateTime date)
+        {
+            return $"{Convert.ToString(date.Day)}/{Convert.ToString(date.Month)}/{Convert.ToString(date.Year)}";
         }
     }
 }
