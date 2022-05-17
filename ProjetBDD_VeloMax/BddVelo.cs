@@ -41,23 +41,83 @@ namespace ProjetBDD_VeloMax
         {
             this.connexion = connexion;
             LectureModele(connexion);
-            //LectureCommande(connexion);
+            LectureCommande(connexion);
             LecturePiece(connexion);
             LectureEntreprises(connexion);
             LectureIndividu(connexion);
             LectureFournisseur(connexion);
-            // LectureAssemblage(connexion);
+            LectureAssemblage(connexion);
             LectureContenu_M(connexion);
             LectureContenu_P(connexion);
             LectureFidelio(connexion);
-            //LectureProduction(connexion);
-            //LectureLivraison(connexion);
+            LectureProduction(connexion);
+            LectureLivraison(connexion);
         }
 
         public BddVelo(List<Modele> m)
         {
             this.modeles = m;
         }
+
+        #region Affichage Modele
+        public void AffichageModele()
+        {
+            foreach (Modele modele in modeles)
+            {
+                modele.ToString();
+            }
+        }
+        #endregion
+
+        #region AffichagePiece
+        public void AffichagePiece()
+        {
+            foreach (Piece piece in pieces)
+            {
+                piece.ToString();
+            }
+        }
+        #endregion
+
+        #region AffichageFournisseur
+        public void AffichageFournisseur()
+        {
+            foreach (Fournisseur fournisseur in fournisseurs)
+            {
+                fournisseur.Afficher();
+            }
+        }
+        #endregion
+
+        #region AffichageCommande
+        public void AffichageCommande()
+        {
+            foreach (Commande commande in commandes)
+            {
+                commande.ToString();
+            }
+        }
+        #endregion
+
+        #region AffichageEntreprise
+        public void AffichageEntreprise()
+        {
+            foreach (Entreprise entreprise in entreprises)
+            {
+                entreprise.ToString();
+            }
+        }
+        #endregion
+
+        #region AffichageIndividu
+        public void AffichageIndividu()
+        {
+            foreach (Individu individu in individus)
+            {
+                individu.AfficherIndividu();
+            }
+        }
+        #endregion
 
         #region StockPiece
         public void StockParPiece()
