@@ -22,24 +22,35 @@ namespace ProjetBDD_VeloMax
         //private string Nom { get { return nomE; } set { nomE = value; } }
         //public int ID { get { return id; } set { id = value; } }
 
-        public Commande(int numC, DateTime dateC, DateTime dateLivraison,string adresseC,string nomE,int id)
+        public Commande(int numC, DateTime dateC, DateTime dateLivraison, string adresseC, string nomE)
         {
             this.numC = numC;
             this.dateC = dateC;
             this.dateLivraison = dateLivraison;
             this.adresseC = adresseC;
             this.nomE = nomE;
-            this.id = id;
+            id = -1;
         }
 
-    //    public Commandexml()
-    //    {
-    //        public Commande(int numC, DateTime dateC, DateTime dateLivraison, string adresseC, string nomE, int id)
-				//: this(numC, -1)
+        public Commande(int numC, DateTime dateC, DateTime dateLivraison, string adresseC, int id)
+        {
+            this.numC = numC;
+            this.dateC = dateC;
+            this.dateLivraison = dateLivraison;
+            this.adresseC = adresseC;
+            this.id = id;
+            nomE = "";
 
-    //        {
-    //        }
-    //    }
+        }
+
+        //    public Commandexml()
+        //    {
+        //        public Commande(int numC, DateTime dateC, DateTime dateLivraison, string adresseC, string nomE, int id)
+        //: this(numC, -1)
+
+        //        {
+        //        }
+        //    }
 
         //public Commande()
         //        : this(null, null, null, "N/C", "N/C", null); // N/C : Non Communiqué

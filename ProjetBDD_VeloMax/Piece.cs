@@ -45,8 +45,8 @@ namespace ProjetBDD_VeloMax
 
         public override string ToString()
         {
-            return $" numPiece : {numP} ,Description : {descriptionP}, Num_catalogue : {num_catalogue},Delai : {delai}, " +
-            $"Stock {stock}, Prix {prixP} ";
+            return $" numPiece : {numP} | Description : {descriptionP} | Num_catalogue : {num_catalogue} | Delai : {delai} | " +
+            $"Stock : {stock} | Prix : {prixP}";
         }
     }
 }

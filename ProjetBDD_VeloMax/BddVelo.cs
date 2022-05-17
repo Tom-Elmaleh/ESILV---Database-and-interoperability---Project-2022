@@ -61,6 +61,126 @@ namespace ProjetBDD_VeloMax
             this.modeles = m;
         }
 
+        #region MeilleurClient
+        /// <summary>
+        /// Retrouvez-le (ou les) meilleur client en fonction des quantités vendues en nombre de  pièces vendues ou en cumul en euros 
+        /// </summary>
+        public void MeilleurClient(MySqlConnection connection)
+        {
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select nomE, volume_achat from entreprise order by volume_achat desc;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+            string nomE;
+            int volumeachat;
+            int volcopy = 0;
+            bool stop = false;
+            int count = 0;
+            Console.WriteLine("\nMeilleur client Entreprise");
+            while (reader.Read() && stop == false)// parcours ligne par ligne
+            {
+                nomE = reader.GetString(0);
+                volumeachat = reader.GetInt32(1);
+
+                if (volcopy <= volumeachat || count == 0)
+                {
+                    volcopy = volumeachat;
+                }
+
+                else if (volcopy > volumeachat)
+                {
+                    stop = true;
+                }
+
+                if (stop == false)
+                {
+                    Console.WriteLine($"nom Entreprise : {nomE} | volume d'achat :{volumeachat}");
+                }
+                count += 1;
+            }
+            connection.Close();
+
+            connection.Open();
+            command = connection.CreateCommand();
+            command.CommandText = "select nomI,prenom,sum(quantiteP*prixP) " +
+            "from individu natural join commande " +
+            "natural join contenu_piece " +
+            "natural join piece group by id order by sum(quantiteP * prixP) desc; ";
+
+            reader = command.ExecuteReader();
+            string nomI;
+            string prenom;
+            int cumul = 0;
+            stop = false;
+            int copy = 0;
+            count = 0;
+            Console.WriteLine("\nMeilleur client Individu en cumul euros pour les pièces");
+            while (reader.Read() && stop == false)// parcours ligne par ligne
+            {
+                nomI = reader.GetString(0);
+                prenom = reader.GetString(1);
+                cumul = reader.GetInt32(2);
+
+                if (copy <= cumul || count == 0)
+                {
+                    copy = cumul;
+                }
+
+                else if (copy > cumul)
+                {
+                    stop = true;
+                }
+
+                if (stop == false)
+                {
+                    Console.WriteLine($"Nom : {nomI} | Prenom : {prenom} | cumul de pièces :{cumul} euros");
+                }
+                count += 1;
+            }
+            connection.Close();
+
+            connection.Open();
+            command = connection.CreateCommand();
+            command.CommandText = "select nomI,prenom,sum(quantiteM * prix) " +
+            "from individu natural join commande " +
+            "natural join contenu_modele " +
+            "natural join modele group by id " +
+            "order by sum(quantiteM * prix) desc;";
+
+            reader = command.ExecuteReader();
+
+
+            stop = false;
+            copy = 0;
+            count = 0;
+            Console.WriteLine("\nMeilleur client Individu en cumul euros pour les modèles");
+            while (reader.Read() && stop == false)// parcours ligne par ligne
+            {
+                nomI = reader.GetString(0);
+                prenom = reader.GetString(1);
+                cumul = reader.GetInt32(2);
+
+                if (copy <= cumul || count == 0)
+                {
+                    copy = cumul;
+                }
+
+                else if (copy > cumul)
+                {
+                    stop = true;
+                }
+
+                if (stop == false)
+                {
+                    Console.WriteLine($"Nom : {nomI} | Prenom : {prenom} | cumul de modèles :{cumul} euros");
+                }
+                count += 1;
+            }
+            connection.Close();
+        }
+        #endregion
+
         /// <summary>
         /// Méthode qui retourne le nombre de clients de VeloMax
         /// </summary>
@@ -72,20 +192,21 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         /// <summary>
-        /// Méthode qui retourne le nombre de pices dont le stock
+        /// Méthode qui retourne le nombre de pieces et de modèles dont le stock est inférieur ou égale à 2
         /// </summary>
         #region ProduitStock2
         public void ProduitStock2()
         {
-            for (int i=0;i<=pieces.Count();i++)
+            for (int i = 0; i < pieces.Count(); i++)
             {
-                if (pieces[i].Stock<=2)
+                if (pieces[i].Stock <= 2)
                 {
                     Console.WriteLine(pieces[i].ToString());
                 }
-            }
 
-            for (int i = 0; i <= modeles.Count(); i++)
+            }
+            Console.WriteLine("\n");
+            for (int i = 0; i < modeles.Count(); i++)
             {
                 if (modeles[i].Stock <= 2)
                 {
@@ -99,47 +220,48 @@ namespace ProjetBDD_VeloMax
         #region ListMembres
         public void ListeMembres(MySqlConnection connection)
         {
-
-            //foreach (var groupe in individusGroupedByNumero)
-            //{
-            //    Console.WriteLine("Programme d'adhésion" + groupe.Key);
-            //    foreach(var ind in groupe)
-            //    {
-            //        Console.WriteLine(ind.ToString());
-            //    }
-            //}
-
-            List<Object> Members = new List<Object>();
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = "select i.*,descriptionf,duree from individu i join fidelio f on f.numero=i.numero " +
-            "group by i.id,descriptionf order by f.numero asc;";
+            command.CommandText = "select id,nomI,prenom,descriptionf from individu i join fidelio f on " +
+            "f.numero=i.numero order by descriptionf;";
             MySqlDataReader reader;
             reader = command.ExecuteReader();
-
             int id;
             string nomI;
             string prenom;
-            string telephoneI;
-            string adresseI;
-            string courrielI;
-            int numero;
             string descriptionf;
-            string duree;
 
             while (reader.Read())// parcours ligne par ligne
             {
                 id = reader.GetInt32(0);
                 nomI = reader.GetString(1);
                 prenom = reader.GetString(2);
-                telephoneI = reader.GetString(3);
-                adresseI = reader.GetString(4);
-                courrielI = reader.GetString(5);
-                numero = reader.GetInt32(6);
-                descriptionf = reader.GetString(7);
-                duree = $"{reader.GetString(8)} an";
-                Console.WriteLine(" ");
-               // Members.Add(new Object(id, nomI, prenom, telephoneI, adresseI, courrielI, numero, descriptionf));
+                descriptionf = reader.GetString(3);
+                Console.WriteLine($"Id :{id} | nomI : {nomI} | prenom :{prenom} | description : {descriptionf}");
+            }
+            connection.Close();
+        }
+        #endregion
+
+
+        #region Pièces/Vélos par Fournisseur
+        public void NbproduitFournisseur(MySqlConnection connection)
+        {
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select nomF,count(*),siret from livraison natural join fournisseur group by siret;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+            string nomF;
+            int nbpieces;
+            string siret;
+            Console.WriteLine("\nNombres de pièces et/ou vélos fournis par fournisseur.");
+            while (reader.Read())// parcours ligne par ligne
+            {
+                nomF = reader.GetString(0);
+                nbpieces = reader.GetInt32(1);
+                siret = reader.GetString(2);
+                Console.WriteLine($"Nom fournisseur :{nomF} | Nombre de pièces : {nbpieces} | siret :{siret}");
             }
             connection.Close();
         }
@@ -186,9 +308,9 @@ namespace ProjetBDD_VeloMax
                 date_intro = ConversionDateTime(readerModele.GetString(5));
                 date_sortie = ConversionDateTime(readerModele.GetString(6));
                 nbModele = readerModele.GetInt32(7);
-                //stockM = reader.GetInt32(7);
+                stockM = readerModele.GetInt32(7);
 
-                Modele modele0 = new Modele(numM, nomVelo, grandeur, prix, date_intro, date_sortie, stockM);
+                Modele modele0 = new Modele(numM, nomVelo, grandeur,ligne,prix, date_intro, date_sortie, stockM);
                 var monTupleModele = Tuple.Create(modele0, nbModele);
                 liste_Modele_Vendus.Add(monTupleModele);
             }
@@ -465,10 +587,15 @@ namespace ProjetBDD_VeloMax
         /// </summary>
         /// <param name="connection"></param>
 
+        /// <summary>
+        /// Cette méthode recrée la liste de modèles via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
+        /// </summary>
+        /// <param name="connection"></param>
+
         #region LectureModele
         public void LectureModele(MySqlConnection connection)
         {
-             modeles.Clear();
+            modeles.Clear();
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
             command.CommandText = "select * from modele;";
@@ -482,7 +609,7 @@ namespace ProjetBDD_VeloMax
             string ligne;
             DateTime date_intro;
             DateTime date_sortie;
-            int stockM=0;
+            int stockM;
 
             while (reader.Read())// parcours ligne par ligne
             {
@@ -493,8 +620,8 @@ namespace ProjetBDD_VeloMax
                 ligne = reader.GetString(4);
                 date_intro = ConversionDateTime(reader.GetString(5));
                 date_sortie = ConversionDateTime(reader.GetString(6));
-        //        stockM = reader.GetInt32(7);
-                modeles.Add(new Modele(numM, nomVelo, grandeur, prix, date_intro, date_sortie,stockM));
+                stockM = reader.GetInt32(7);
+                modeles.Add(new Modele(numM, nomVelo, grandeur, ligne, prix, date_intro, date_sortie, stockM));
             }
             connection.Close();
         }
@@ -507,7 +634,7 @@ namespace ProjetBDD_VeloMax
         #region LecturePiece
         public void LecturePiece(MySqlConnection connection)
         {
-            modeles.Clear();
+            pieces.Clear();
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
             command.CommandText = "select * from piece;";
@@ -529,7 +656,7 @@ namespace ProjetBDD_VeloMax
                 delai = reader.GetInt32(3);
                 stock = reader.GetInt32(4);
                 prixP = reader.GetInt32(5);
-                pieces.Add(new Piece(numP,descriptionP,num_catalogue,delai,stock,prixP));
+                pieces.Add(new Piece(numP, descriptionP, num_catalogue, delai, stock, prixP));
             }
             connection.Close();
         }
@@ -564,9 +691,9 @@ namespace ProjetBDD_VeloMax
                 prenom = reader.GetString(2);
                 telephoneI = reader.GetString(3);
                 adresseI = reader.GetString(4);
-                courrielI= reader.GetString(5);
+                courrielI = reader.GetString(5);
                 numero = reader.GetInt32(6);
-                individus.Add(new Individu(id,nomI,prenom,telephoneI,adresseI,courrielI,numero));
+                individus.Add(new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero));
             }
             connection.Close();
         }
@@ -602,7 +729,7 @@ namespace ProjetBDD_VeloMax
                 contactE = reader.GetString(4);
                 volume_achat = reader.GetInt32(5);
                 remise = reader.GetFloat(5);
-                entreprises.Add(new Entreprise(nomE,telephoneE,adresseE,courrielE,contactE,volume_achat,remise));
+                entreprises.Add(new Entreprise(nomE, telephoneE, adresseE, courrielE, contactE, volume_achat, remise));
             }
             connection.Close();
         }
@@ -625,8 +752,8 @@ namespace ProjetBDD_VeloMax
             int numC;
             DateTime dateC;
             DateTime dateLivraison;
-            string adresseC; 
-            string nomE; 
+            string adresseC;
+            string nomE;
             int id;
 
             while (reader.Read())// parcours ligne par ligne
@@ -635,9 +762,18 @@ namespace ProjetBDD_VeloMax
                 dateC = ConversionDateTime(reader.GetString(1));
                 dateLivraison = ConversionDateTime(reader.GetString(2));
                 adresseC = reader.GetString(3);
-                nomE = reader.GetString(4);
-                id = reader.GetInt32(5);
-                commandes.Add(new Commande(numC,dateC,dateLivraison,adresseC,nomE,id));
+
+                if (!reader.IsDBNull(4))
+                {
+                    nomE = reader.GetString(4);
+                    commandes.Add(new Commande(numC, dateC, dateLivraison, adresseC, nomE));
+                }
+
+                else
+                {
+                    id = reader.GetInt32(5);
+                    commandes.Add(new Commande(numC, dateC, dateLivraison, adresseC, id));
+                }
             }
             connection.Close();
         }
@@ -666,13 +802,13 @@ namespace ProjetBDD_VeloMax
 
             while (reader.Read())// parcours ligne par ligne
             {
-                siret=reader.GetString(0);
-                nomF= reader.GetString(1);
-                adresseF= reader.GetString(2);
-                contactF= reader.GetString(3);
-                libelle= reader.GetInt32(4);
+                siret = reader.GetString(0);
+                nomF = reader.GetString(1);
+                adresseF = reader.GetString(2);
+                contactF = reader.GetString(3);
+                libelle = reader.GetInt32(4);
                 stockF = reader.GetInt32(5);
-                fournisseurs.Add(new Fournisseur(siret,nomF,adresseF,contactF,libelle,stockF));
+                fournisseurs.Add(new Fournisseur(siret, nomF, adresseF, contactF, libelle, stockF));
             }
             connection.Close();
         }
@@ -698,8 +834,8 @@ namespace ProjetBDD_VeloMax
             while (reader.Read())// parcours ligne par ligne
             {
                 numM = reader.GetInt32(0);
-                numP = reader.GetString(1);                
-                assemblages.Add(new Assemblage(numM,numP));
+                numP = reader.GetString(1);
+                assemblages.Add(new Assemblage(numM, numP));
             }
             connection.Close();
         }
@@ -727,9 +863,9 @@ namespace ProjetBDD_VeloMax
             while (reader.Read())// parcours ligne par ligne
             {
                 quantiteM = reader.GetInt32(0);
-                numM= reader.GetInt32(1);
+                numM = reader.GetInt32(1);
                 numC = reader.GetInt32(2);
-                contenus_M.Add(new Contenu_Modele(quantiteM, numM,numC));
+                contenus_M.Add(new Contenu_Modele(quantiteM, numM, numC));
             }
             connection.Close();
         }
@@ -793,7 +929,7 @@ namespace ProjetBDD_VeloMax
                 cout = reader.GetInt32(2);
                 duree = reader.GetInt32(3);
                 rabais = reader.GetInt32(4);
-                fidelios.Add(new Fidelio(numero,description,cout,duree,rabais));
+                fidelios.Add(new Fidelio(numero, description, cout, duree, rabais));
             }
             connection.Close();
         }
@@ -805,12 +941,12 @@ namespace ProjetBDD_VeloMax
         /// <param name="connection"></param>
 
         #region LectureProduction
-        public void LectureProduction(MySqlConnection connection)
+        public void LectureLivraison(MySqlConnection connection)
         {
             productions.Clear();
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = "select * from production;";
+            command.CommandText = "select * from livraison;";
             MySqlDataReader reader;
             reader = command.ExecuteReader();
 
@@ -820,8 +956,8 @@ namespace ProjetBDD_VeloMax
             while (reader.Read())// parcours ligne par ligne
             {
                 numP = reader.GetString(0);
-                siret = reader.GetString(1);                
-                productions.Add(new Livraison(numP,siret));
+                siret = reader.GetString(1);
+                productions.Add(new Livraison(numP, siret));
             }
             connection.Close();
         }
@@ -833,12 +969,12 @@ namespace ProjetBDD_VeloMax
         /// <param name="connection"></param>
 
         #region LectureLivraison
-        public void LectureLivraison(MySqlConnection connection)
+        public void LectureProduction(MySqlConnection connection)
         {
             livraisons.Clear();
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = "select * from livraison;";
+            command.CommandText = "select * from production;";
             MySqlDataReader reader;
             reader = command.ExecuteReader();
 
@@ -853,7 +989,7 @@ namespace ProjetBDD_VeloMax
                 date_sortieP = ConversionDateTime(reader.GetString(1));
                 numP = reader.GetString(2);
                 siret = reader.GetString(3);
-                livraisons.Add(new Production(date_introP,date_sortieP, numP, siret));
+                livraisons.Add(new Production(date_introP, date_sortieP, numP, siret));
             }
             connection.Close();
         }
