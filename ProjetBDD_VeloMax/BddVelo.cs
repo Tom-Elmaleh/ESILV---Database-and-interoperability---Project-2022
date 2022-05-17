@@ -547,9 +547,10 @@ namespace ProjetBDD_VeloMax
                 descriptionf = reader.GetString(7);
                 date_adhesion = ConversionDateTime(reader.GetString(8));
                 duree = reader.GetInt32(9);
+                
 
                 date_expiration = date_adhesion.AddYears(duree);
-                Individu indiv = new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero,date_adhesion);
+                Individu indiv = new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero,date_adhesion,date_expiration);
                 var monTuple = Tuple.Create(indiv, date_expiration);
                 liste_date_expi.Add(monTuple);
             }
@@ -558,6 +559,28 @@ namespace ProjetBDD_VeloMax
             connection.Close();
 
             return liste_date_expi;
+        }
+        #endregion
+
+        #region Date_Expiration
+        public DateTime Date_Expi(int id,MySqlConnection connection)
+        {
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select duree,date_adhesion from individu i natural join fidelio where i.id="+id+";";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+            int duree = 0;
+            DateTime date_adhesion=new DateTime();
+            DateTime date_expi;
+            while (reader.Read())// parcours ligne par ligne
+            {
+                duree = reader.GetInt32(0);
+                date_adhesion = ConversionDateTime(reader.GetString(1));
+            }
+            connection.Close();
+            date_expi = date_adhesion.AddYears(duree);
+            return date_expi;
         }
         #endregion
 
@@ -665,7 +688,7 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region ConversionDateTime
-        public static DateTime ConversionDateTime(string date)
+        public  static DateTime ConversionDateTime(string date)
         {
 
             string[] tab = date.Split('/');
@@ -677,7 +700,7 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region Delete
-        public void Delete(MySqlConnection connection,string table,string[] tab)
+        public  void Delete(MySqlConnection connection,string table,string[] tab)
         {
             string key = tab[1];
             string id = tab[0];
@@ -690,7 +713,7 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region Choose
-        public void Choose(MySqlConnection connection,string table)
+        public  void Choose(MySqlConnection connection,string table)
         {
             switch (table)
             {
@@ -727,7 +750,7 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region Creer
-        public void Creer(MySqlConnection connection, string nomtable, string[] valeurs)
+        public  void Creer(MySqlConnection connection, string nomtable, string[] valeurs)
         {
             string valeurSql = "";
             for(int i =0; i < valeurs.Length-1; i++)
@@ -860,6 +883,7 @@ namespace ProjetBDD_VeloMax
             string courrielI;
             int numero;
             DateTime date_adhesion;
+            DateTime date_expiration;
             while (reader.Read())// parcours ligne par ligne
             {
                 id = reader.GetInt32(0);
@@ -870,7 +894,8 @@ namespace ProjetBDD_VeloMax
                 courrielI = reader.GetString(5);
                 numero = reader.GetInt32(6);
                 date_adhesion = ConversionDateTime(reader.GetString(7));
-                individus.Add(new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero, date_adhesion));
+                date_expiration = Date_Expi(id, connection);
+                individus.Add(new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero, date_adhesion,date_expiration));
             }
             connection.Close();
         }

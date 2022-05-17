@@ -35,7 +35,7 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region AjouterFinal
-        public string[] AjouterFinal(string nomTable)
+        public static string[] AjouterFinal(string nomTable)
         {
             string[] valeurs=new string[0];
 
@@ -155,7 +155,7 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region Update
-        public string [] Update()
+        public static  string [] Update()
         {
             Console.WriteLine("\nQue voulez vous mettre à jour :" +
             "\nFournisseur (fournisseur)" +
@@ -175,7 +175,7 @@ namespace ProjetBDD_VeloMax
             #endregion
         }
         #region Update Final
-        public string[] UpdateFinal(string nomTable)
+        public static string[] UpdateFinal(string nomTable)
         {
             string[] tab = new string[3];
 
@@ -245,7 +245,7 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region Supprimer
-        public string [] Supprimer()
+        public static  string [] Supprimer()
         {
             Console.WriteLine("\nQue voulez vous supprimer :" +
                "\nFournisseur (fournisseur)" +
@@ -286,7 +286,7 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region SupprimerFinal
-        public string[] SupprimerFinal(string nomTable)
+        public static string[] SupprimerFinal(string nomTable)
         {
 
             string[] ASupprimer = new string[2];
@@ -340,7 +340,7 @@ namespace ProjetBDD_VeloMax
             return ASupprimer;
         }
         #endregion
-        public MySqlConnection Connection(string user)
+        public  MySqlConnection Connection(string user)
         {
             string password = "";
             MySqlConnection maConnexion = null;
