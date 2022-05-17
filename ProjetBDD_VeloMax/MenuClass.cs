@@ -110,7 +110,7 @@ namespace ProjetBDD_VeloMax
                 case "piece":
                     Console.WriteLine("Quel est le numero de la piece ?");
                     string numP = Console.ReadLine();
-                    Console.WriteLine( "De quelle type de piece s'agit-il ? (frein,guidons,..)";
+                    Console.WriteLine( "De quelle type de piece s'agit-il ? (frein,guidons,..)");
                     string descriptionf = Console.ReadLine();
                     Console.WriteLine("Quel est son numero dans le catalogue ?");
                     int num_catalogue = Convert.ToInt32(Console.ReadLine());
@@ -205,7 +205,7 @@ namespace ProjetBDD_VeloMax
                     break;
                 case "entreprise":
                     Console.WriteLine("Quel est le nom de l'entreprise que vous voulez modifier");
-                    string nomE = Convert.ToInt32(Console.ReadLine();
+                    string nomE = Console.ReadLine();
                     Console.WriteLine("Quel est l'attribut que vous voulez modifier ?");
                     string attributE = Console.ReadLine();
                     Console.WriteLine("Quel est la nouvelle valeur ?");
@@ -297,7 +297,7 @@ namespace ProjetBDD_VeloMax
                 case "individu":
                     Console.WriteLine("Quel est l'identifiant de l'individu que vous voulez supprimer ?");
                     int id = Convert.ToInt32(Console.ReadLine());
-                    ASupprimer =new string[2] { Convert.ToString(id), "id"" };
+                    ASupprimer =new string[2] { Convert.ToString(id), "id"};
 
 
 

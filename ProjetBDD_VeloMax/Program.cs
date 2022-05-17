@@ -227,8 +227,8 @@ namespace ProjetBDD_VeloMax
                      "Vous avez choisis le module Pieces et Velos, voici les commandes à votre disposition : ");
                         Console.WriteLine("\n A. Gestion Piece \n B. Gestion Velo \n ");
                         //Ici, embaucher ou licencier un salarié revient à l'ajouter (ou le supprimer) de l'organigramme, c'est-à-dire de l'arbre n-aire
-                        int choixPiece;
-                        int choixVelo;
+                       
+                        int choixVelo1;
                         string choix3 = Console.ReadLine();
                         switch (choix3)
                         {
@@ -247,9 +247,9 @@ namespace ProjetBDD_VeloMax
                                 Console.WriteLine("\n A. Creer un Velo \n B. Supprimer un Velo \nC. Modifier un Velo ");
                                 
 
-                                choixVelo = Convert.ToInt32(Console.ReadLine());
+                                choixVelo1 = Convert.ToInt32(Console.ReadLine());
 
-                                switch (choixVelo)
+                                switch (choixVelo1)
                                 {
                                     case 'A':
                                         Console.WriteLine("Est-ce un velo existant ou non ? ");
@@ -322,4 +322,4 @@ namespace ProjetBDD_VeloMax
 
         }
     }
-}
+

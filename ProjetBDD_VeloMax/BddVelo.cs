@@ -268,7 +268,7 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region RapportStat
-        public Tuple<List<Tuple<Modele, int>>> RapportStat(MySqlConnection connection)
+        public void RapportStat(MySqlConnection connection)
         {
             var liste_Modele_Vendus = new List<Tuple<Modele, int>>();
             var liste_Piece_Vendues = new List<Tuple<Piece, int>>();
@@ -338,9 +338,9 @@ namespace ProjetBDD_VeloMax
             }
             connection.Close();
 
-            List<Tuple<object, int>>[] res = [liste_Modele_Vendus, liste_Piece_Vendues];
+  //List<Tuple<object, int>>[] res = [liste_Modele_Vendus, liste_Piece_Vendues];
 
-            return res;
+
         }
         #endregion
 
