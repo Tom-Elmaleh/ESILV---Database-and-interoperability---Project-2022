@@ -16,6 +16,14 @@ namespace ProjetBDD_VeloMax
         private int volume_achat;
         private float remise;
 
+        public string NomE { get { return nomE; } set { nomE = value; } }
+        public string Telephone { get { return telephoneE; } set { telephoneE = value; } }
+        public string Adresse { get { return adresseE; } set { adresseE = value; } }
+        public string CourrielE { get { return courrielE; } set { courrielE = value; } }
+        public string ContactE { get { return contactE; } set { courrielE = value; } }
+        public int Volume_A { get { return volume_achat; } set { volume_achat = value; } }
+        public float Remise { get { return remise; } set { remise = value; } }
+
         public Entreprise(string nomE,string telephoneE, string adresseE, string courrielE, string contactE, int volume_achat, float remise)
         {
             this.nomE = nomE;
@@ -25,6 +33,12 @@ namespace ProjetBDD_VeloMax
             this.contactE = contactE;
             this.volume_achat = volume_achat;
             this.remise = remise;
+        }
+
+        public override string ToString()
+        {
+            return $"nomEntreprise : {nomE} | Tel : {telephoneE} | Adresse {adresseE} | CourrielE {courrielE} | Contact : {contactE}" +
+            $"Volume_Achat : {volume_achat} | Remise :{remise} ";
         }
     }
 }

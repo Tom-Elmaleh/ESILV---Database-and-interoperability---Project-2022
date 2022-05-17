@@ -54,12 +54,120 @@ namespace ProjetBDD_VeloMax
             //LectureLivraison(connexion);
         }
 
-
-
         public BddVelo(List<Modele> m)
         {
             this.modeles = m;
         }
+
+        #region StockPiece
+        public void StockParPiece()
+        {
+            connexion.Open();
+            MySqlCommand command = connexion.CreateCommand();
+            command.CommandText = "select numP,sum(stock) from piece group by numP;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+
+            string numP;
+            int stock;
+
+            while (reader.Read())// parcours ligne par ligne
+            {
+                numP = reader.GetString(0);
+                stock = reader.GetInt32(1);
+                Console.WriteLine($"Numéro de la pièce : {numP} | Stock par pièce : {stock}");
+            }
+            connexion.Close();
+        }
+        #endregion
+
+        #region StockPieceParFournisseur
+        public void StockPieceParFournisseur()
+        {
+            connexion.Open();
+            MySqlCommand command = connexion.CreateCommand();
+            command.CommandText = "select siret,stockF from fournisseur;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+
+            string siret;
+            int stockF;
+
+            while (reader.Read())// parcours ligne par ligne
+            {
+                siret = reader.GetString(0);
+                stockF = reader.GetInt32(1);
+                Console.WriteLine($"Numéro de Siret du fournisseur : {siret} | Stock de pièces par fournisseur {stockF}");
+            }
+            connexion.Close();
+        }
+        #endregion
+
+        #region StockVeloParLigne
+        public void StockVeloParLigne()
+        {
+            connexion.Open();
+            MySqlCommand command = connexion.CreateCommand();
+            command.CommandText = "select ligne,sum(stockM) from modele group by ligne;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+
+            string ligne;
+            int stockM;
+
+            while (reader.Read())// parcours ligne par ligne
+            {
+                ligne = reader.GetString(0);
+                stockM = reader.GetInt32(1);
+                Console.WriteLine($"Ligne de vélo : {ligne} | Stock par ligne : {stockM}");
+            }
+            connexion.Close();
+        }
+        #endregion
+
+        #region StockVeloParMarque
+        public void StockVeloParMarque()
+        {
+            connexion.Open();
+            MySqlCommand command = connexion.CreateCommand();
+            command.CommandText = "select nomVelo,sum(stockM) from modele group by nomVelo;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+
+            string nomVelo;
+            int stockM;
+
+            while (reader.Read())// parcours ligne par ligne
+            {
+                nomVelo = reader.GetString(0);
+                stockM = reader.GetInt32(1);
+                Console.WriteLine($"Marque de vélo : {nomVelo} | Stock par marque : {stockM}");
+            }
+            connexion.Close();
+        }
+        #endregion
+
+        #region StockVeloParGrandeur
+        public void StockVeloParGrandeur()
+        {
+            connexion.Open();
+            MySqlCommand command = connexion.CreateCommand();
+            command.CommandText = "select grandeur,sum(stockM) from modele group by grandeur;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+
+            string grandeur;
+            int stockM;
+
+            while (reader.Read())// parcours ligne par ligne
+            {
+                grandeur = reader.GetString(0);
+                stockM = reader.GetInt32(1);
+                Console.WriteLine($"Grandeur de Vélo : {grandeur} | Stock par grandeur : {stockM}");
+            }
+            connexion.Close();
+        }
+        #endregion
 
         #region MeilleurClient
         /// <summary>
@@ -381,7 +489,7 @@ namespace ProjetBDD_VeloMax
                 duree = reader.GetInt32(9);
 
                 date_expiration = date_adhesion.AddYears(duree);
-                Individu indiv = new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero);
+                Individu indiv = new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero,date_adhesion);
                 var monTuple = Tuple.Create(indiv, date_expiration);
                 liste_date_expi.Add(monTuple);
             }
@@ -600,11 +708,6 @@ namespace ProjetBDD_VeloMax
         /// </summary>
         /// <param name="connection"></param>
 
-        /// <summary>
-        /// Cette méthode recrée la liste de modèles via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
-        /// </summary>
-        /// <param name="connection"></param>
-
         #region LectureModele
         public void LectureModele(MySqlConnection connection)
         {
@@ -696,7 +799,7 @@ namespace ProjetBDD_VeloMax
             string adresseI;
             string courrielI;
             int numero;
-
+            DateTime date_adhesion;
             while (reader.Read())// parcours ligne par ligne
             {
                 id = reader.GetInt32(0);
@@ -706,7 +809,8 @@ namespace ProjetBDD_VeloMax
                 adresseI = reader.GetString(4);
                 courrielI = reader.GetString(5);
                 numero = reader.GetInt32(6);
-                individus.Add(new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero));
+                date_adhesion = ConversionDateTime(reader.GetString(7));
+                individus.Add(new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero, date_adhesion));
             }
             connection.Close();
         }
@@ -975,7 +1079,6 @@ namespace ProjetBDD_VeloMax
             connection.Close();
         }
         #endregion
-        //string numP,string siret,DateTime date_introP,DateTime date_sortieP
         /// <summary>
         /// Cette méthode recrée la liste des commandes via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>

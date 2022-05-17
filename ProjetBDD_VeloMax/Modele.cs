@@ -17,6 +17,14 @@ namespace ProjetBDD_VeloMax
         private DateTime date_sortieV;
         private int stockM;
 
+
+        public int NumM { get { return numM; } set { numM = value; } }
+        public string NomVelo {  get { return nomVelo;} set { nomVelo = value; } }
+        public string Grandeur {  get { return grandeur; } set { grandeur = value; } }
+        public int Prix { get { return prix; } set { prix = value; } }
+        public string Ligne { get { return ligne; } set { ligne = value; } }
+        public DateTime Date_Intro { get { return date_introV; } set { date_introV = value; } }
+        public DateTime Date_Sortie { get { return date_sortieV; } set { date_sortieV = value; } }
         public int Stock { get { return stockM; } set { stockM = value; } }
 
         public Modele(int numM, string nomVelo, string grandeur, string ligne, int prix, DateTime date_introV, DateTime date_sortieV, int stockM)
@@ -33,9 +41,6 @@ namespace ProjetBDD_VeloMax
 
         public override string ToString()
         {
-            //string resultat = $"numM:{numM}|{nomVelo}|{grandeur}|{prix}|{date_introV}|{date_sortieV}|*/{stockM}";
-            //return resultat;
-
             return $"numM : {numM} | NomVelo : {nomVelo} | Grandeur : {grandeur} | Prix : {prix}|" +
             $"Ligne : {ligne} | Date_intro : {date_introV} | Date_sortie : {date_sortieV} | stock : {stockM}";
         }

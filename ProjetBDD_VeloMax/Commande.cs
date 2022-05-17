@@ -15,12 +15,12 @@ namespace ProjetBDD_VeloMax
         private string nomE;
         private int id;
 
-        //public int NUMC { get { return numC; } set { numC = value; } }
-        //public DateTime DATEC { get { return dateC; } set { dateC = value; } }
-        //public DateTime DATE_L { get { return dateLivraison; } set { dateLivraison = value; } }
-        //public string Adresse { get { return adresseC; } set { adresseC = value; } }
-        //private string Nom { get { return nomE; } set { nomE = value; } }
-        //public int ID { get { return id; } set { id = value; } }
+        public int NumC { get { return numC; } set { numC = value; } }
+        public DateTime DateC { get { return dateC; } set { dateC = value; } }
+        public DateTime DateL { get { return dateLivraison; } set { dateLivraison = value; } }
+        public string Adresse { get { return adresseC; } set { adresseC = value; } }
+        public string Nom { get { return nomE; } set { nomE = value; } }
+        public int ID { get { return id; } set { id = value; } }
 
         public Commande(int numC, DateTime dateC, DateTime dateLivraison, string adresseC, string nomE)
         {
@@ -40,21 +40,21 @@ namespace ProjetBDD_VeloMax
             this.adresseC = adresseC;
             this.id = id;
             nomE = "";
-
         }
 
-        //    public Commandexml()
-        //    {
-        //        public Commande(int numC, DateTime dateC, DateTime dateLivraison, string adresseC, string nomE, int id)
-        //: this(numC, -1)
+        public override string ToString()
+        {
+            string resul = "";
+            if(id == -1)
+            {
+                resul = $"NumCommande : {numC} | Date_Commande : {dateC} | Date_Livraison :  {dateLivraison} | Adresse : {adresseC} | nom_Entreprise : {nomE}";
+            }
 
-        //        {
-        //        }
-        //    }
-
-        //public Commande()
-        //        : this(null, null, null, "N/C", "N/C", null); // N/C : Non Communiqué
-        //{
-        //}
+            else
+            {
+                resul = $"NumCommande : {numC} | Date_Commande : {dateC} | Date_Livraison : {dateLivraison} | Adresse : {adresseC} | Id_Individu : {id}";
+            }
+            return resul;
+        }
     }
 }

@@ -15,10 +15,12 @@ namespace ProjetBDD_VeloMax
         private int libelle;
         private int stockF;
 
-        public string SIRET { get { return siret; } set { siret = value; } }
-        public string Nom { get { return nomF; } set { nomF = value; } }
-        public int Stock { get { if (stockF < 10) return stockF; else return -1; } set { stockF = value; } }
-
+        public string Siret { get { return siret; } set { siret = value; } } // xml
+        public string Nom { get { return nomF; } set { nomF = value; } }     // xml
+        public string Adresse { get { return adresseF; } set { adresseF = value; } } 
+        public string Contact { get { return contactF; } set { contactF = value; } }
+        public int Libelle { get { return libelle; } set { libelle = value; } }
+        public int Stock { get { if (stockF < 10) return stockF; else return -1; } set { stockF = value; } } // xml
 
         public Fournisseur(string siret,string nomF,string adresseF,string contactF,int libelle,int stockF)
         {
@@ -43,6 +45,11 @@ namespace ProjetBDD_VeloMax
         public override string ToString()
         {
             return siret + nomF + stockF;
+        }
+
+        public string Afficher()
+        {
+            return $"Siret {siret} | Nom {nomF} | Adresse {adresseF} | Contact {contactF} | Libelle {libelle} | Stock {stockF}";
         }
     }
 }
