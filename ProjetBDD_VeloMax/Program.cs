@@ -14,14 +14,16 @@ namespace ProjetBDD_VeloMax
             {
                 Console.Clear();
                 Console.WriteLine("Menu : \n" +
-                    "1) Creation\n" +
-                    "2) Supression\n" +
-                    "3) Mise a jour\n" +
+                    "1) Module Client\n" +
+                    "2) Module Commande \n" +
+                    "3) Module Fournisseur\n" +
                     "4) Module Stock\n" + 
                     "\n" +
                     "5) Module Statistique\n" +
                     "\n" +
-                    "6) Module Demo\n" +
+                    
+                    "6) Module Piece et Velo \n" +
+                    "7) Module Demo\n" +
                     "\n" +
                     "Quel module souhaitez vous utiliser ?");
                 int exo;
@@ -31,10 +33,10 @@ namespace ProjetBDD_VeloMax
                 {
 
                     case 1:
-                        #region Module Creation
+                        #region Module Client
                         Console.WriteLine("\n ----------------------------------------------------------------------------\n" +
-                         "Vous avez choisis le module Creation, voici les commandes à votre disposition : \n ");
-                         strNouvtableau= MenuClass.Ajouter();
+                         "Vous avez choisis le module Client, voici les commandes à votre disposition : \n ");
+                        Console.WriteLine("\n A. Créer un client \n B. Supprimer un client \n C. Modifier un client \n ");
 
 
                         string choix = Console.ReadLine();
@@ -44,7 +46,7 @@ namespace ProjetBDD_VeloMax
 
                                 Console.WriteLine("Vous avez choisi d'ajouter un nouveau client");
                                 Console.WriteLine("\n -----------------------------------\n");
-                                
+                                //fONCTION CREER 
 
                                 break;
 
@@ -64,21 +66,7 @@ namespace ProjetBDD_VeloMax
 
                                 break;
 
-                            case "D":
-                                Console.WriteLine("Vous avez choisi de d'afficher la liste des clients par ordre alphabétique");
-                                Console.WriteLine("\n -----------------------------------\n");
-                                Console.WriteLine("A partir de quel fichier Clients ?(Repertoire_Clients)");
-                                string nomFichierClient_4 = Console.ReadLine() + ".txt";
-                                Console.WriteLine("A partir de quel fichier Commandes ?(Repertoire_Commandes)");
-                                string nomFichierCommandes_3 = Console.ReadLine() + ".txt";
-                                Console.WriteLine("Voici la liste des Clients rangés par ordre alphabétique");
-                                Console.WriteLine("\n -----------------------------------\n");
-                                List<Client> liste = Client.Ordrealphabetique(nomFichierClient_4, nomFichierCommandes_3);
-                                for (int i = 0; i < liste.Count; i++)
-                                {
-                                    Console.WriteLine(i + 1 + "." + liste[i].Nom + " " + liste[i].Prenom);
-                                }
-                                break;
+                           
 
                             
                         }
@@ -138,18 +126,25 @@ namespace ProjetBDD_VeloMax
                             case "A":
                                 Console.WriteLine("Vous avez choisis d'ajouter un nouveau fournisseur");
                                 Console.WriteLine("\n -----------------------------------\n");
+                                //fonction qui demande les atributs et ajoute fournisseur
                                 
                                 break;
 
                             case "B":
                                 Console.WriteLine("Vous avez choisis de supprimer un nouveau fournisseur");
                                 Console.WriteLine("\n -----------------------------------\n");
+                                Console.WriteLine("Quel est le nom du fourniseur ");
+
+                                string nomfournisseur = Console.ReadLine();
+
+
                                 
                                 break;
 
                             case "C":
                                 Console.WriteLine("Vous avez choisis de modifier un nouveau fournisseur");
                                 Console.WriteLine("\n -----------------------------------\n");
+                                //fonction afficage 
                               
                                 break;
 
@@ -185,10 +180,10 @@ namespace ProjetBDD_VeloMax
                                 switch (choixpiece)
                                 {
                                     case 1:
-                                        Console.WriteLine("Voici le stock par piece: ");
+                                        Console.WriteLine("Voici le stock par piece: ");//Tom
                                         break;
                                     case 2:
-                                        Console.WriteLine("Voici le stock par type de piece : ");
+                                        Console.WriteLine("Voici le stock par type de piece : ");//tOM
                                         break;
 
                                 }
@@ -203,19 +198,19 @@ namespace ProjetBDD_VeloMax
                                 Console.WriteLine("\n -----------------------------------\n" +
                                "Voici les commandes à votre disposition : ");
                                 Console.WriteLine("\n 1.Par marque (killimanjaro,..) \n 2. Par grandeur \n3.Par ligne  " +
-                                    "\n ");
+                                    "\n ");//tOM
 
                                 choixVelo= Convert.ToInt32(Console.ReadLine());
                                 switch (choixVelo)
                                 {
                                     case 1:
-                                        Console.WriteLine("Voici le stock de velo par marque: ");
+                                        Console.WriteLine("Voici le stock de velo par marque: ");//TOM
                                         break;
                                     case 2:
-                                        Console.WriteLine("Voici le stock velo par grandeur : ");
+                                        Console.WriteLine("Voici le stock velo par grandeur : ");//tom
                                         break;
                                     case 3:
-                                        Console.WriteLine("Voici le stock de velos par ligne : ");
+                                        Console.WriteLine("Voici le stock de velos par ligne : ");//tOM
                                         break;
 
                                 }
@@ -252,17 +247,59 @@ namespace ProjetBDD_VeloMax
                                 Console.WriteLine("\n -----------------------------------\n");
                                 Console.WriteLine("Vous avez choisis la gestion des Velos, voici les commandes à votre disposition : ");
                                 Console.WriteLine("\n A. Creer un Velo \n B. Supprimer un Velo \nC. Modifier un Velo ");
-                                break;
+                                
 
                                 choixVelo = Convert.ToInt32(Console.ReadLine());
 
-                                switch (choixPiece)
+                                switch (choixVelo)
                                 {
-                                    case 1:
-                                       
+                                    case 'A':
+                                        Console.WriteLine("Est-ce un velo existant ou non ? ");
+                                        int choixExiste = Convert.ToInt32(Console.ReadLine());
+                                        switch (choixExiste)
+                                        {
+                                            case 1:
+                                                // fonction qui incremente le stock
+                                                break;
+                                            case 2:
+                                                // fonction qui creer un nouvel individu avec un INSERT 
+                                                break;
+                                        }
+
+                                        break;
+                                    case 'B':
+                                        Console.WriteLine("Est-ce un velo existant ou non ? ");
+                                        int choixExiste2 = Convert.ToInt32(Console.ReadLine());
+                                        switch (choixExiste2)
+                                        {
+                                            case 1:
+                                                Console.WriteLine("Rentrez numéro du velo :");
+                                                int numeroVelo = Convert.ToInt32(Console.ReadLine());
+                                                Console.WriteLine("Quellle quantité ?");
+                                                int quantiteAsupprimer = Convert.ToInt32(Console.ReadLine());
+                                                // fonction qui décremente le stock
+                                                break;
+                                            case 2:
+                                                Console.WriteLine("Quellle quantité ?");
+                                                Console.WriteLine("Rentrez numéro du velo :");
+                                                int numeroVelo2 = Convert.ToInt32(Console.ReadLine());
+                                                int quantiteAsupprimer2 = Convert.ToInt32(Console.ReadLine());
+                                                // fonction qui supprime un nouvel individu avec un DELETE
+                                                break;
+                                        }
                                         break;
 
+                                    case 'C':
+                                        Console.WriteLine("Quel est le numéro du velo que vous voulez modifier ?");
+                                        int numeroAmodeifier = Convert.ToInt32(Console.ReadLine());
+                                        Console.WriteLine("Que voulez vous modifier ?");
+                                        string Amodif = Console.ReadLine();//regarder le nom affiché
+                                        // fonction qui update grace à UPDATE 
+                                        break;
+
+
                                 }
+                                break;
 
 
 

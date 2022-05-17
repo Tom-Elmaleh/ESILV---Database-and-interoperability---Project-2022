@@ -327,7 +327,7 @@ namespace ProjetBDD_VeloMax
 
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = "select count(numP)* quantiteP from piece natural join contenu_piece natural join commande group by NumC;";
+            command.CommandText = "select sum(quantiteP) from piece natural join contenu_piece natural join commande group by NumC;";
             MySqlDataReader reader;
             reader = command.ExecuteReader();
 
@@ -352,7 +352,7 @@ namespace ProjetBDD_VeloMax
 
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = "select count(numM)*quantiteM from modele natural join contenu_modele natural join commande group by NumC;";
+            command.CommandText = "select sum(quantiteM) from modele natural join contenu_modele natural join commande group by NumC;";
             MySqlDataReader reader;
             reader = command.ExecuteReader();
 
