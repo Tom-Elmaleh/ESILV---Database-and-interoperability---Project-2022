@@ -66,8 +66,6 @@ namespace ProjetBDD_VeloMax
 
                                 break;
 
-                           
-
                             
                         }
 
@@ -308,6 +306,7 @@ namespace ProjetBDD_VeloMax
 
                 }
                 #endregion
+
                 Console.WriteLine("\nTapez Escape pour sortir ou Enter pour continuer");
                 cki = Console.ReadKey();
             } while (cki.Key != ConsoleKey.Escape);
@@ -321,10 +320,6 @@ namespace ProjetBDD_VeloMax
 
         }
 
-
-        MenuClass menu = new MenuClass();
-            menu.Menu();
-            //bdd.Models;
         }
     }
 }

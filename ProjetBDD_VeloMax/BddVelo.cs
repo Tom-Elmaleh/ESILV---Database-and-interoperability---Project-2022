@@ -497,7 +497,7 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region ConversionDateTime
-        static DateTime ConversionDateTime(string date)
+        public static DateTime ConversionDateTime(string date)
         {
 
             string[] tab = date.Split('/');
@@ -509,8 +509,10 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region Delete
-        public void Delete(MySqlConnection connection,string table,string key,string id)
+        public void Delete(MySqlConnection connection,string table,string[] tab)
         {
+            string key = tab[1];
+            string id = tab[0];
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
             command.CommandText = $"delete from {table} where {key}={id};";
@@ -557,28 +559,39 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region Creer
-        public void Creer(MySqlConnection connection, string table, string valeurs)
+        public void Creer(MySqlConnection connection, string nomtable, string[] valeurs)
         {
+            string valeurSql = "";
+            for(int i =0; i < valeurs.Length-1; i++)
+            {
+                valeurSql = valeurSql + valeurs[i] + ",";
+            }
+            valeurSql = valeurSql + valeurs[valeurs.Length - 1];
+
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = $"insert into {table} values ({valeurs});";
+            command.CommandText = $"insert into {nomtable} values ({valeurSql});";
             MySqlDataReader reader;
             reader = command.ExecuteReader();
             connection.Close();
-            Choose(connection, table);
+            Choose(connection, nomtable);
         }
-        #endregion
+        #endregion       
 
         #region MAJ
-        public void MAJ(MySqlConnection connection,string table,string maj,string condition)
+        public void MAJ(MySqlConnection connection,string[] tab, string nomtable)
         {
+            string maj = tab[2];
+            string attribut = tab[1];
+            string cle = tab[0];
+
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = $"update {table} set {maj} where {condition};";
+            command.CommandText = $"update {nomtable} set {attribut = maj} where {attribut =cle};";
             MySqlDataReader reader;
             reader = command.ExecuteReader();
             connection.Close();
-            Choose(connection,table);
+            Choose(connection,nomtable);
         }
         #endregion
 
