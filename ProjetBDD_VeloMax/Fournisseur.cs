@@ -49,7 +49,7 @@ namespace ProjetBDD_VeloMax
 
         public string Afficher()
         {
-            return $"Siret {siret} | Nom {nomF} | Adresse {adresseF} | Contact {contactF} | Libelle {libelle} | Stock {stockF}";
+            return $"siret : {siret} | nomF : {nomF} | adresseF : {adresseF} | contactF : {contactF} | libelle : {libelle} | stockF : {stockF}";
         }
     }
 }

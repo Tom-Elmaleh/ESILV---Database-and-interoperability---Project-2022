@@ -68,18 +68,16 @@ namespace ProjetBDD_VeloMax
 
         public override string ToString()
         {
-            DateTime date = Convert.ToDateTime(date_expiration.Subtract(DateTime.Today));
 
-            Console.WriteLine(date);
-
-            if (date.Month < 2)
+            if (date_adhesion.Month - date_expiration.Month < 2)
             {
-                return id + nomI + prenom + numero + date_expiration;
+                return id + nomI + prenom + numero + date_expiration + date_adhesion;
+
             }
 
             else
             {
-                return id + nomI + prenom + date_adhesion;
+                return id + nomI + prenom + numero + date_adhesion;
             }
         }
 
@@ -120,8 +118,8 @@ namespace ProjetBDD_VeloMax
 
         public string AfficherIndividu()
         {
-            return $"ID : {id} | Nom : {nomI} | Prenom : {prenom} | Telephone : {telephoneI} | Adresse : {adresseI} |"
-            + $"| NumeroF : {numero} | Date expiration : {AffichageDate(date_expiration)}";
+            return $"id : {id} | nomI : {nomI} | prenom : {prenom} | telephoneI : {telephoneI} | adresseI : {adresseI} |"
+            + $"| numero : {numero} | Date expiration : {AffichageDate(date_expiration)}";
         }
 
         public string AffichageDate(DateTime date)

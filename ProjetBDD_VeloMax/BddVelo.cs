@@ -411,6 +411,52 @@ namespace ProjetBDD_VeloMax
         }
         #endregion
 
+        //	Noms des clients avec le cumul de toutes ses commandes en euros Thessa
+        #region Clients et leur cumul de commandes
+        public void CumulCommande(MySqlConnection connection)
+        {
+            connection.Open();
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = "select nomI, prenom, sum(prixP * quantiteP), sum(prix * quantiteM)from individu natural join contenu_piece" +
+            " natural join piece natural join commande natural join modele natural join contenu_modele group by numC;";
+            MySqlDataReader reader;
+            reader = command.ExecuteReader();
+            string nomI;
+            string prenom;
+            int sommePiece;
+            int sommeModele;
+            Console.WriteLine("\nCumul en euros des commandes des clients particuliers");
+            while (reader.Read())// parcours ligne par ligne
+            {
+                nomI = reader.GetString(0);
+                prenom = reader.GetString(1);
+                sommePiece = reader.GetInt32(2);
+                sommeModele = reader.GetInt32(3);
+
+                Console.WriteLine($"Nom : {nomI} | Prenom : {prenom} | cumul des commandes :{sommeModele + sommeModele}");
+            }
+            connection.Close();
+
+            connection.Open();
+            command = connection.CreateCommand();
+            command.CommandText = "select nomE, sum(prixP * quantiteP), sum(prix * quantiteM)from entreprise natural join contenu_piece" +
+            " natural join piece natural join commande natural join modele natural join contenu_modele group by numC;";
+            reader = command.ExecuteReader();
+            string nomE;
+            int sommePieceE;
+            int sommeModeleE;
+            Console.WriteLine("\nCumul en euros des commandes des entreprises");
+            while (reader.Read())// parcours ligne par ligne
+            {
+                nomE = reader.GetString(0);
+                sommePieceE = reader.GetInt32(1);
+                sommeModeleE = reader.GetInt32(2);
+
+                Console.WriteLine($"Nom entreprise :{nomE} | cumul des commandes :{sommePieceE + sommeModeleE}");
+            }
+            connection.Close();
+        }
+        #endregion
 
         #region Pièces/Vélos par Fournisseur
         public void NbproduitFournisseur(MySqlConnection connection)
@@ -485,7 +531,8 @@ namespace ProjetBDD_VeloMax
                 liste_Modele_Vendus.Add(modele0);
             }
 
-            
+            connection.Close();
+            connection.Open();
             MySqlCommand commandPiece = connection.CreateCommand();
             commandPiece.CommandText = "select  piece.* ,sum(quantiteP)from contenu_piece  natural join piece  group by  numP;";
             MySqlDataReader readerPiece;
@@ -592,9 +639,6 @@ namespace ProjetBDD_VeloMax
         #region Moyennes
         public int Moyenne_Montant(MySqlConnection connection)
         {
-
-
-
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
             command.CommandText = "select PrixP*quantiteP from commande natural join contenu_piece natural join piece;";
@@ -616,17 +660,19 @@ namespace ProjetBDD_VeloMax
             int moyModele = 0;
             int cptModele = 0;
 
+            connection.Close();
+
+            connection.Open();
             MySqlCommand commandModele = connection.CreateCommand();
-//command.CommandText = "select sum(PrixP) from commande natural join contenu_modele natural join modele natural join piece natural join assemblage group by numC;";
-            command.CommandText = "select prix*quantiteM from commande natural join contenu_modele natural join modele;";
+            commandModele.CommandText = "select prix*quantiteM from commande natural join contenu_modele natural join modele;";
             MySqlDataReader readerModele;
             readerModele = commandModele.ExecuteReader();
 
             int nbPrixModeleParCommande = 0;
 
-            while (reader.Read())// parcours ligne par ligne
+            while (readerModele.Read())// parcours ligne par ligne
             {
-                nbPrixModeleParCommande = reader.GetInt32(0);
+                nbPrixModeleParCommande = readerModele.GetInt32(0);
                 moyModele += nbPrixModeleParCommande;
                 cptModele++;
             }
@@ -686,9 +732,6 @@ namespace ProjetBDD_VeloMax
             moy = moy / cpt;
 
             return moy;
-
-
-
         }
         #endregion
 
@@ -796,7 +839,7 @@ namespace ProjetBDD_VeloMax
 
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = $"update {nomtable} set {attribut} = {maj} where {attribut} = {nouvcle};";
+            command.CommandText = $"update {nomtable} set {attribut} = {maj} where {cle} = {nouvcle};";
             MySqlDataReader reader;
             reader = command.ExecuteReader();
             connection.Close();
@@ -804,7 +847,7 @@ namespace ProjetBDD_VeloMax
             Console.WriteLine("Mis à jour réussie avec succès!");
         }
         #endregion
-
+            
         /// <summary>
         /// Cette méthode recrée la liste de modèles via une requête SQL. Elle est utilisé lorsqu'on modifie la liste
         /// </summary>

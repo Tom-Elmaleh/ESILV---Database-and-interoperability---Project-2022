@@ -68,7 +68,7 @@ namespace ProjetBDD_VeloMax
             string user = Console.ReadLine();
             Console.WriteLine("Saisir mot de passe");
             string password = Console.ReadLine();
-            MySqlConnection connexion = ConnectionFinale(user, password);
+            MySqlConnection connexion = Connection(user);//(user, password);
             Console.Clear();
 
             BddVelo bdd = new BddVelo(connexion);
@@ -358,7 +358,7 @@ namespace ProjetBDD_VeloMax
                                 Console.WriteLine("Vous avez choisi la gestion des Pieces ! ");
                                 Console.WriteLine("\n -----------------------------------\n");
                                 Console.WriteLine("Vous avez choisis la gestion des Piece, voici les commandes à votre disposition : ");
-                                Console.WriteLine("\n A. Creer un Piece \n B. Supprimer un Piece \nC. Modifier un Piece ");
+                                Console.WriteLine("\n 1. Creer un Piece \n 2. Supprimer un Piece \n 3. Modifier un Piece ");
 
                                 int choix1 = Convert.ToInt32(Console.ReadLine());
 
@@ -376,16 +376,22 @@ namespace ProjetBDD_VeloMax
                                                 Console.WriteLine("Quel est le numero de la pièce que vous voulez approvisionner");
                                                 string numP = Console.ReadLine();
                                                 Console.WriteLine("Quelle quantité ?");
-                                                string quantite = Console.ReadLine();
+                                                int quantite = Convert.ToInt32(Console.ReadLine());
                                                 connexion.Open();
                                                 MySqlCommand command = connexion.CreateCommand();
-                                                command.CommandText = $"select stock from piece where numP={numP};";
+                                                command.CommandText = $"select stock from piece where numP='{numP}';";
                                                 MySqlDataReader reader = command.ExecuteReader();
-                                                string stock = reader.GetString(0);
-                                                reader = command.ExecuteReader();
-                                                //string[] tab = new string[3] { numP, "stock", Convert.ToString(Convert.ToInt32(stock + quantite)) };
-                                                //connexion.Close();
-                                                //bdd.MAJ(connexion, tab, "piece");
+                                                int stock=0;
+                                                while (reader.Read())
+                                                {
+                                                    stock = reader.GetInt32(0);
+                                                }
+
+                                                int somme = stock + quantite;
+
+                                                string tab = $"'{numP}',stock,{somme.ToString()},numP";
+                                                connexion.Close();
+                                                bdd.MAJ(connexion, tab, "piece");
                                                 bdd.AffichagePiece();
                                                 break;
 
@@ -429,14 +435,11 @@ namespace ProjetBDD_VeloMax
                                 Console.WriteLine("\n A. Creer un Velo \n B. Supprimer un Velo \nC. Modifier un Velo ");
 
 
-                                choixVelo1 = Convert.ToInt32(Console.ReadLine());
+                                string choixVelo2 = Convert.ToString(Console.ReadLine());
 
-                                switch (choixVelo1)
+                                switch (choixVelo2)
                                 {
-                                    case 'A':
-                                        Console.WriteLine("Est-ce un velo existant ou non ? ");
-                                        int choixExiste = Convert.ToInt32(Console.ReadLine());
-
+                                    case "A":
                                         Console.WriteLine("Vous avez choisis d'ajouter un velo !");
                                         Console.WriteLine("S'agit-il d'un velo déja existant ? \n1.OUI \n2.NON ");
 
@@ -448,16 +451,20 @@ namespace ProjetBDD_VeloMax
                                                 Console.WriteLine("Quel est le numero du velo que vous voulez approvisionner");
                                                 string numM = Console.ReadLine();
                                                 Console.WriteLine("Quelle quantité ?");
-                                                string quantite = Console.ReadLine();
+                                                int quantite = Convert.ToInt32(Console.ReadLine());
                                                 connexion.Open();
                                                 MySqlCommand command = connexion.CreateCommand();
-                                                command.CommandText = $"select stock from modele where numP={numM};";
+                                                command.CommandText = $"select stockM from modele where numM={numM};";
                                                 MySqlDataReader reader = command.ExecuteReader();
-                                                string stockM = reader.GetString(0);
-                                                reader = command.ExecuteReader();
-                                                string tab = "";// new string[3] { numM, "stockM", Convert.ToString(Convert.ToInt32(stockM + quantite)) };
+                                                int stockM = 0;
+                                                while(reader.Read())
+                                                {
+                                                     stockM = reader.GetInt32(0);
+
+                                                }
+                                                string tab= $"'{numM}'" + ",stockM" + $",{Convert.ToString(Convert.ToInt32(stockM + quantite))}" + ",numM";
                                                 connexion.Close();
-                                                bdd.MAJ(connexion, tab, "modele");
+                                                bdd.MAJ(connexion, tab,"modele");
                                                 bdd.AffichageModele();
                                                 break;
 
@@ -473,7 +480,7 @@ namespace ProjetBDD_VeloMax
 
 
 
-                                    case 'B':
+                                    case "B":
                                         Console.WriteLine("Vous avez choisis de supprimer un velo");
                                         Console.WriteLine("\n -----------------------------------\n");
                                         bdd.AffichageModele();
@@ -485,7 +492,7 @@ namespace ProjetBDD_VeloMax
                                         break;
 
 
-                                    case 'C':
+                                    case "C":
                                         Console.WriteLine("Vous avez choisis de modifier une modele");
                                         Console.WriteLine("\n -----------------------------------\n");
                                         bdd.AffichageModele();
@@ -558,15 +565,20 @@ namespace ProjetBDD_VeloMax
                             case "A":
                                 bdd.NombredeClients();
                                 break;
+
                             case "B":
+                                bdd.CumulCommande(connexion);
+                                break;
+
+                            case "C":
                                 Console.WriteLine("\nVoici la liste des produits ayant une quantité une  stock inférieure ou égale à 2");
                                 bdd.ProduitStock2();
                                 break;
-                            case "C":
+                            case "D":
                                 Console.WriteLine("\nVoici le nombres de pièces fournis par le fournisseur");
                                 bdd.NbproduitFournisseur(connexion);
                                 break;
-                            case "D":
+                            case "E":
                                 // Export des stocks faibles avec fournisseurs pour command en XML
 
                                 //Instanciation des objets			

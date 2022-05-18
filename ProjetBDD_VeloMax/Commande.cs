@@ -47,12 +47,12 @@ namespace ProjetBDD_VeloMax
             string resul = "";
             if (id == -1)
             {
-                resul = $"NumCommande : {numC} | Date_Livraison : {AffichageDate(dateLivraison)} | Adresse : {adresseC} | nom_Entreprise : {nomE}";
+                resul = $"numC : {numC} | date_Livraison : {AffichageDate(dateLivraison)} | adresseC : {adresseC} | nomE : {nomE}";
             }
 
             else
             {
-                resul = $"NumCommande : {numC} | Date_Livraison : {AffichageDate(dateLivraison)} | Adresse : {adresseC} | Id_Individu : {id}";
+                resul = $"numC : {numC} | dateLivraison : {AffichageDate(dateLivraison)} | adresseC : {adresseC} | id : {id}";
             }
             return resul;
         }

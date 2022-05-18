@@ -70,7 +70,7 @@ namespace ProjetBDD_VeloMax
 
                     break;
 
-                case "fournissseur":
+                case "fournisseur":
                     Console.WriteLine("Quel est le numero Siret du fournisseur ?");
                     string siret = Console.ReadLine();
                     Console.WriteLine("Quel est le nom du fornisseur ?");
@@ -135,10 +135,26 @@ namespace ProjetBDD_VeloMax
                     string date_intro =Console.ReadLine();
                     Console.WriteLine("Quel est la date de sortie de vente du  velo ? (DD/MM/YY)");
                     string date_sortie =Console.ReadLine();
-
-                    valeurs = $"'{numM}','{nomVelo}','{grandeur}','{ligne}',{prix},'{date_intro}','{date_sortie}'";
+                    Console.WriteLine("Quelle quantité voulez-vous ajouter ?");
+                    int  stockM = Convert.ToInt32(Console.ReadLine());
+                    valeurs = $"'{numM}','{nomVelo}','{grandeur}',{prix},'{ligne}','{date_intro}','{date_sortie}',{stockM}";
                     break;
+                case "commande":
+                    Console.WriteLine("Quel est le numero de commande ?");
+                    int numC = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Quel est la commande ?(DD/MM/YY)");
+                    string dateC = Console.ReadLine();
+                    Console.WriteLine("Quel est la date à laquelle on livre ?(DD/MM/YY) ");
+                    string dateLivraison = Console.ReadLine();
+                    Console.WriteLine("Quel est l'addresse de Livraison ?");
+                    string addresseC = Console.ReadLine();
+                    Console.WriteLine("Quel est le nom de l'entreprise ? ('Na'si particulier) )");
+                    string nomEn = Console.ReadLine();
+                    Console.WriteLine("Quel est l'identifiant du particulier ? (0 si entreprise)");
+                    int ide = Convert.ToInt32(Console.ReadLine());
 
+                    valeurs = $"{numC},'{dateC}','{dateLivraison}','{addresseC}','{nomEn}',{ide}";
+                    break;
             }
 
             Console.WriteLine("");
@@ -183,10 +199,10 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string maj= Console.ReadLine();
 
-                    tab = $"{id},{attribut},{maj},"+",id";
+                    tab = $"{id},{attribut},{maj},id";
                     break;
 
-                case "fournissseur":
+                case "fournisseur":
                     Console.WriteLine("Quel est le siret du fournisseur que vous voulez modifier ?");
                     string siret = Console.ReadLine();
                     Console.WriteLine("Quel est l'attribut que vous voulez modifier ?");
@@ -209,12 +225,11 @@ namespace ProjetBDD_VeloMax
                     break;
                 case "piece":
                     Console.WriteLine("Quel est le numero de la piece que vous voulez modifier ?");
-                    int numP = Convert.ToInt32(Console.ReadLine());
+                    string numP = Convert.ToString(Console.ReadLine());
                     Console.WriteLine("Quel est l'attribut que vous voulez modifier ?");
                     string attributP = Console.ReadLine();
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majP = Console.ReadLine();
-
                     tab = $"'{numP}',{attributP},{majP}" + ",NumP";
 
                     break;
@@ -230,6 +245,17 @@ namespace ProjetBDD_VeloMax
 
                     break;
 
+                case "commande":
+                    Console.WriteLine("Quel est le numero de commande que vous voulez modifier ?");
+                    int numC = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Quel est l'attribut que vous voulez modifier ?");
+                    string attributC = Console.ReadLine();
+                    Console.WriteLine("Quel est la nouvelle valeur ?");
+                    string majC = Console.ReadLine();
+
+                    tab = $"'{numC}',{attributC},{majC}" + ",NumC";
+
+                    break;
             }
 
             return tab;
@@ -296,7 +322,7 @@ namespace ProjetBDD_VeloMax
 
                     break;
 
-                case "fournissseur":
+                case "fournisseur":
                     Console.WriteLine("Quel est le siret du fournisseur que vous voulez supprimer ?");
                     string siret = Console.ReadLine();
                     
@@ -313,7 +339,7 @@ namespace ProjetBDD_VeloMax
                     break;
                 case "piece":
                     Console.WriteLine("Quel est le numero de la piece que vous voulez supprimer");
-                    int numP = Convert.ToInt32(Console.ReadLine());
+                    string numP = Convert.ToString(Console.ReadLine());
                     ASupprimer = $"'{numP}'" + ",numP";
 
 
@@ -324,6 +350,14 @@ namespace ProjetBDD_VeloMax
                     int numM = Convert.ToInt32(Console.ReadLine());
 
                     ASupprimer = $"{numM}" + ",numP";
+
+                    break;
+
+                case "commande":
+                    Console.WriteLine("Quel est le numero du modele que vous voulez supprimer ?");
+                    int numC = Convert.ToInt32(Console.ReadLine());
+
+                    ASupprimer = $"{numC}" + ",numC";
 
 
                     break;

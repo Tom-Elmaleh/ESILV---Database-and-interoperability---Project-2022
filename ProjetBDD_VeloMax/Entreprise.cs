@@ -37,7 +37,7 @@ namespace ProjetBDD_VeloMax
 
         public override string ToString()
         {
-            return $"nomEntreprise : {nomE} | Contact : {contactE} | Volume_Achat : {volume_achat} | Remise :{remise} ";
+            return $"nomE : {nomE} | contactE : {contactE} | volume_Achat : {volume_achat} | remise :{remise} ";
         }
     }
 }

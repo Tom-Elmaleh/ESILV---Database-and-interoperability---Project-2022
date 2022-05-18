@@ -41,8 +41,8 @@ namespace ProjetBDD_VeloMax
 
         public override string ToString()
         {
-            return $"numM : {numM} | NomVelo : {nomVelo} | Grandeur : {grandeur} | Prix : {prix}|" +
-            $"Ligne : {ligne} | Date_intro : {AffichageDate(date_introV)} | Date_sortie : {AffichageDate(date_sortieV)} | stock : {stockM}";
+            return $"numM : {numM} | nomVelo : {nomVelo} | grandeur : {grandeur} | prix : {prix}|" +
+            $"ligne : {ligne} | date_introV : {AffichageDate(date_introV)} | date_sortieV : {AffichageDate(date_sortieV)} | stockM : {stockM}";
         }
 
         public string AffichageDate(DateTime date)
