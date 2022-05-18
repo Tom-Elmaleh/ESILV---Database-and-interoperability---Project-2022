@@ -183,7 +183,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string maj= Console.ReadLine();
 
-                    tab = $"{id},{attribut},{maj}";
+                    tab = $"{id},{attribut},{maj},"+",id";
                     break;
 
                 case "fournissseur":
@@ -194,7 +194,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majF= Console.ReadLine();
 
-                    tab = $"'{siret}',{attributF},{majF}";
+                    tab = $"'{siret}',{attributF},{majF}"+",NomF";
                     break;
                 case "entreprise":
                     Console.WriteLine("Quel est le nom de l'entreprise que vous voulez modifier");
@@ -204,7 +204,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majE = Console.ReadLine();
 
-                    tab = $"'{nomE}',{attributE},{majE}";
+                    tab = $"'{nomE}',{attributE},{majE}" + ",NomE";
 
                     break;
                 case "piece":
@@ -215,7 +215,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majP = Console.ReadLine();
 
-                    tab = $"'{numP}',{attributP},{majP}";
+                    tab = $"'{numP}',{attributP},{majP}" + ",NumP";
 
                     break;
                 case "modele":
@@ -226,7 +226,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majM = Console.ReadLine();
 
-                    tab = $"{numM},{attributM},{majM}";
+                    tab = $"{numM},{attributM},{majM}"+",NomM";
 
                     break;
 

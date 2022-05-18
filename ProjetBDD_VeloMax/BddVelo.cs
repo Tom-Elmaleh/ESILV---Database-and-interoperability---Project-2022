@@ -791,11 +791,12 @@ namespace ProjetBDD_VeloMax
 
             string maj = tab1[2];
             string attribut = tab1[1];
-            string cle = tab1[0];
+            string nouvcle = tab1[0];
+            string cle = tab1[3];
 
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = $"update {nomtable} set {attribut} = {maj} where {attribut} = {cle};";
+            command.CommandText = $"update {nomtable} set {attribut} = {maj} where {attribut} = {nouvcle};";
             MySqlDataReader reader;
             reader = command.ExecuteReader();
             connection.Close();
