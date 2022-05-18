@@ -279,10 +279,10 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region SupprimerFinal
-        public static string[] SupprimerFinal(string nomTable)
+        public static string SupprimerFinal(string nomTable)
         {
 
-            string[] ASupprimer = new string[2];
+            string ASupprimer = "";
 
             string choix = nomTable.ToLower();
             switch (choix)
@@ -290,7 +290,7 @@ namespace ProjetBDD_VeloMax
                 case "individu":
                     Console.WriteLine("Quel est l'identifiant de l'individu que vous voulez supprimer ?");
                     int id = Convert.ToInt32(Console.ReadLine());
-                    ASupprimer =new string[2] { Convert.ToString(id), "id"};
+                    ASupprimer = $"{id}"+",id";
 
 
 
@@ -299,23 +299,23 @@ namespace ProjetBDD_VeloMax
                 case "fournissseur":
                     Console.WriteLine("Quel est le siret du fournisseur que vous voulez modifier ?");
                     string siret = Console.ReadLine();
-                    ASupprimer = new string[2] { Convert.ToString(siret), "siret" };
-
+                    
+                    ASupprimer = $"'{siret}'" + ",siret"; 
 
 
                     break;
                 case "entreprise":
                     Console.WriteLine("Quel est le nom de l'entreprise que vous voulez modifier ?");
                     string nomE =Console.ReadLine();
-                    ASupprimer = new string[2] { Convert.ToString(nomE), "nomE" };
+                    ASupprimer = $"'{nomE}'" + ",nomE";
 
 
                     break;
                 case "piece":
                     Console.WriteLine("Quel est le numero de la piece que vous voulez modifier");
                     int numP = Convert.ToInt32(Console.ReadLine());
+                    ASupprimer = $"'{numP}'" + ",numP";
 
-                    ASupprimer = new string[2] { Convert.ToString(numP), "numP" };
 
 
                     break;
@@ -323,7 +323,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est le numero du modele que vous voulez modifier ?");
                     int numM = Convert.ToInt32(Console.ReadLine());
 
-                    ASupprimer = new string[2] { Convert.ToString(numM), "numM" };
+                    ASupprimer = $"{numM}" + ",numP";
 
 
                     break;

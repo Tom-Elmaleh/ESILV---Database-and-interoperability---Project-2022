@@ -700,10 +700,11 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region Delete
-        public  void Delete(MySqlConnection connection,string table,string[] tab)
+        public  void Delete(MySqlConnection connection,string table,string tab)
         {
-            string key = tab[1];
-            string id = tab[0];
+            string[] tab1 = tab.Split(',');
+            string key = tab1[1];
+            string id = tab1[0];
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
             command.CommandText = $"delete from {table} where {key}={id};";
@@ -773,12 +774,15 @@ namespace ProjetBDD_VeloMax
         public void MAJ(MySqlConnection connection,string tab, string nomtable)
         {
             string[] tab1 = tab.Split(',');
-            listeAttributString
+            int n;
+            if(Int32.TryParse(tab1[2],out n) == false)
+            {
+                tab1[2] = $"'{tab1[2]}";
+            }
 
-
-            string maj = tab[2];
-            string attribut = tab[1];
-            string cle = tab[0];
+            string maj = tab1[2];
+            string attribut = tab1[1];
+            string cle = tab1[0];
 
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
