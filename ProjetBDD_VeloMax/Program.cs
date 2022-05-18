@@ -142,7 +142,7 @@ namespace ProjetBDD_VeloMax
                                 {
                                     case 1:
                                         bdd.AffichageIndividu();
-                                        string[] tabValeurI = MenuClass.SupprimerFinal("individu");
+                                        string tabValeurI = MenuClass.SupprimerFinal("individu");
                                         bdd.Delete(connexion, "individu", tabValeurI);
                                         bdd.AffichageIndividu();
                                         break;
@@ -210,7 +210,7 @@ namespace ProjetBDD_VeloMax
                                 Console.WriteLine("Vous avez choisis de supprimer une commande");
                                 Console.WriteLine("\n -----------------------------------\n");
                                 bdd.AffichageCommande();
-                                string[] tabValeur = MenuClass.SupprimerFinal("commande");
+                                string tabValeur = MenuClass.SupprimerFinal("commande");
                                 bdd.Delete(connexion, "commande", tabValeur);
                                 bdd.AffichageCommande();
                                 break;
@@ -250,7 +250,7 @@ namespace ProjetBDD_VeloMax
                                 Console.WriteLine("Vous avez choisis de supprimer un fournisseur");
                                 Console.WriteLine("\n -----------------------------------\n");
                                 bdd.AffichageFournisseur();
-                                string [] tabValeur = MenuClass.SupprimerFinal("fournisseur");
+                                string  tabValeur = MenuClass.SupprimerFinal("fournisseur");
                                 bdd.Delete(connexion, "fournisseur", tabValeur);
                                 bdd.AffichageFournisseur();
                                 break;
@@ -403,7 +403,7 @@ namespace ProjetBDD_VeloMax
                                         Console.WriteLine("Vous avez choisis de supprimer une piece");
                                         Console.WriteLine("\n -----------------------------------\n");
                                         bdd.AffichagePiece();
-                                        string[] tabValeur = MenuClass.SupprimerFinal("piece");
+                                        string tabValeur = MenuClass.SupprimerFinal("piece");
                                         bdd.Delete(connexion, "piece", tabValeur);
                                         bdd.AffichagePiece();
 
@@ -477,7 +477,7 @@ namespace ProjetBDD_VeloMax
                                         Console.WriteLine("Vous avez choisis de supprimer un velo");
                                         Console.WriteLine("\n -----------------------------------\n");
                                         bdd.AffichageModele();
-                                        string[] tabValeur = MenuClass.SupprimerFinal("modele");
+                                        string tabValeur = MenuClass.SupprimerFinal("modele");
                                         bdd.Delete(connexion, "modele", tabValeur);
                                         bdd.AffichageModele();
 
