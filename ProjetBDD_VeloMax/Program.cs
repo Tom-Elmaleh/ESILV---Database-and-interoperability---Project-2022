@@ -40,7 +40,7 @@ namespace ProjetBDD_VeloMax
             MySqlConnection maConnexion = null;
             try
             {
-                string connexionString = "SERVER=localhost;PORT=3306;" +
+                string connexionString = "SERVER=127.0.0.1;PORT=3306;" +
                                          "DATABASE=velomax;" +
                                          $"UID={user};PASSWORD={password}";
                 maConnexion = new MySqlConnection(connexionString);
@@ -55,7 +55,7 @@ namespace ProjetBDD_VeloMax
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Saisir nom urilisateur :");
+            Console.WriteLine("Saisir nom utilisateur :");
             string user = Console.ReadLine();
             Console.WriteLine("Saisir mot de passe");
             string password = Console.ReadLine();
@@ -121,9 +121,6 @@ namespace ProjetBDD_VeloMax
 
                                         break;
                                 }
-
-                               
-
 
                                 break;
 
@@ -248,7 +245,7 @@ namespace ProjetBDD_VeloMax
                                 break;
 
                             case "B":
-                                Console.WriteLine("Vous avez choisis de supprimer un nouveau fournisseur");
+                                Console.WriteLine("Vous avez choisis de supprimer un fournisseur");
                                 Console.WriteLine("\n -----------------------------------\n");
                              
                                 string[] tabValeur = MenuClass.SupprimerFinal("fournisseur");
@@ -261,7 +258,7 @@ namespace ProjetBDD_VeloMax
                                 break;
 
                             case "C":
-                                Console.WriteLine("Vous avez choisis de modifier un nouveau fournisseur");
+                                Console.WriteLine("Vous avez choisis de modifier un fournisseur");
                                 Console.WriteLine("\n -----------------------------------\n");
                                 //fonction afficage 
                                 string[] tabValeur2 = MenuClass.UpdateFinal("fournisseur");
@@ -290,10 +287,12 @@ namespace ProjetBDD_VeloMax
                             case "A":
                                 Console.WriteLine("Vous avez choisi d'examiner le stock de piece ! ");
                                 Console.WriteLine("\n -----------------------------------\n");
-                                Console.WriteLine("Le nombre de piece total est de:");//rajouter stock total de piece
+                                Console.Write("Le nombre de piece total est de:");
+                                
+                                //rajouter stock total de piece
                                 Console.WriteLine("\n -----------------------------------\n" +
                                "Voici les commandes à votre disposition : ");
-                                Console.WriteLine("\n 1.Par piece (CF3, G7,...) \n 2. Par type de piece (frein,cadre,...)  " +
+                                Console.WriteLine("\n 1.Par piece (CF3, G7,...) \n 2. Par fournisseur  " +
                                     "\n "
                                   );
 
@@ -302,10 +301,14 @@ namespace ProjetBDD_VeloMax
                                 {
                                     case 1:
                                         Console.WriteLine("Voici le stock par piece: ");//Tom
+                                        bdd.StockParPiece();
+
                                         break;
                                     case 2:
-                                        Console.WriteLine("Voici le stock par type de piece : ");//tOM
+                                        Console.WriteLine("Voici le stock de piece par fournisseur : ");//tOM
+                                        bdd.StockPieceParFournisseur();
                                         break;
+
 
                                 }
 
@@ -315,7 +318,8 @@ namespace ProjetBDD_VeloMax
                             case "B":
                                 Console.WriteLine("Vous avez choisi d'examiner le stock de velo ! ");
                                 Console.WriteLine("\n -----------------------------------\n");
-                                Console.WriteLine("Le nombre de velo total est de:");//rajouter stock total de velo
+                                Console.WriteLine("Le nombre de velo total est de:");
+                                //rajouter stock total de velo
                                 Console.WriteLine("\n -----------------------------------\n" +
                                "Voici les commandes à votre disposition : ");
                                 Console.WriteLine("\n 1.Par marque (killimanjaro,..) \n 2. Par grandeur \n3.Par ligne  " +
@@ -326,12 +330,15 @@ namespace ProjetBDD_VeloMax
                                 {
                                     case 1:
                                         Console.WriteLine("Voici le stock de velo par marque: ");//TOM
+                                        bdd.StockVeloParMarque();
                                         break;
                                     case 2:
                                         Console.WriteLine("Voici le stock velo par grandeur : ");//tom
+                                        bdd.StockVeloParGrandeur();
                                         break;
                                     case 3:
                                         Console.WriteLine("Voici le stock de velos par ligne : ");//tOM
+                                        bdd.StockVeloParLigne();
                                         break;
 
                                 }
@@ -373,14 +380,48 @@ namespace ProjetBDD_VeloMax
                                         switch(existe)
                                         {
                                             case 1:
+                                                Console.WriteLine("Quel est le numero de la pièce que vous voulez approvisionner");
+                                                string numP = Console.ReadLine();
+                                                Console.WriteLine("Quelle quantité ?");
+                                                string quantite = Console.ReadLine();
+                                                connexion.Open();
+                                                MySqlCommand command = connexion.CreateCommand();
+                                                command.CommandText = $"select stock from piece where numP={numP};";
+                                                MySqlDataReader reader = command.ExecuteReader();
+                                                string stock = reader.GetString(0);
+                                                reader = command.ExecuteReader();
+                                                string[] tab = new string[3] { numP, "stock", Convert.ToString(Convert.ToInt32(stock+quantite)) };
+                                                connexion.Close();
+                                                bdd.MAJ(connexion, tab, "piece");
                                                 
+                                                break;
+
+                                            case 2:
+                                               
+                                                //fonction qui demande les atributs et ajoute fournisseur
+                                                string[] tabValeur3 = MenuClass.AjouterFinal("piece");
+                                                bdd.Creer(connexion, "piece", tabValeur3);
+
                                                 break;
                                         }
 
                                         break;
                                     case 2:
+                                        Console.WriteLine("Vous avez choisis de supprimer une piece");
+                                        Console.WriteLine("\n -----------------------------------\n");
+
+                                        string[] tabValeur = MenuClass.SupprimerFinal("piece");
+                                        bdd.Delete(connexion, "piece", tabValeur);
+
+                                        
+
                                         break;
                                     case 3:
+                                        Console.WriteLine("Vous avez choisis de modifier une piece");
+                                        Console.WriteLine("\n -----------------------------------\n");
+                                        //fonction afficage 
+                                        string[] tabValeur2 = MenuClass.UpdateFinal("piece");
+                                        bdd.MAJ(connexion, tabValeur2, "piece");
                                         break;
                                 }
 
@@ -400,45 +441,60 @@ namespace ProjetBDD_VeloMax
                                     case 'A':
                                         Console.WriteLine("Est-ce un velo existant ou non ? ");
                                         int choixExiste = Convert.ToInt32(Console.ReadLine());
-                                        switch (choixExiste)
+                                       
+                                        Console.WriteLine("Vous avez choisis d'ajouter un velo !");
+                                        Console.WriteLine("S'agit-il d'un velo déja existant ? \n1.OUI \n2.NON ");
+
+                                        int existe = Convert.ToInt32(Console.ReadLine());
+                                        switch (existe)
                                         {
                                             case 1:
-                                                // fonction qui incremente le stock
+                                                Console.WriteLine("Quel est le numero du velo que vous voulez approvisionner");
+                                                string numM = Console.ReadLine();
+                                                Console.WriteLine("Quelle quantité ?");
+                                                string quantite = Console.ReadLine();
+                                                connexion.Open();
+                                                MySqlCommand command = connexion.CreateCommand();
+                                                command.CommandText = $"select stock from modele where numP={numM};";
+                                                MySqlDataReader reader = command.ExecuteReader();
+                                                string stockM = reader.GetString(0);
+                                                reader = command.ExecuteReader();
+                                                string[] tab = new string[3] { numM, "stockM", Convert.ToString(Convert.ToInt32(stockM +quantite))};
+                                                connexion.Close();
+                                                bdd.MAJ(connexion, tab, "modele");
+
                                                 break;
+
                                             case 2:
-                                                // fonction qui creer un nouvel individu avec un INSERT 
+
+                                                //fonction qui demande les atributs et ajoute modele
+                                                string[] tabValeur3 = MenuClass.AjouterFinal("modele");
+                                                bdd.Creer(connexion, "modele", tabValeur3);
+
                                                 break;
                                         }
+                                        break;
+                                
+
+                                      
+                                    case 'B':
+                                        Console.WriteLine("Vous avez choisis de supprimer un velo");
+                                        Console.WriteLine("\n -----------------------------------\n");
+
+                                        string[] tabValeur = MenuClass.SupprimerFinal("modele");
+                                        bdd.Delete(connexion, "modele", tabValeur);
+
 
                                         break;
-                                    case 'B':
-                                        Console.WriteLine("Est-ce un velo existant ou non ? ");
-                                        int choixExiste2 = Convert.ToInt32(Console.ReadLine());
-                                        switch (choixExiste2)
-                                        {
-                                            case 1:
-                                                Console.WriteLine("Rentrez numéro du velo :");
-                                                int numeroVelo = Convert.ToInt32(Console.ReadLine());
-                                                Console.WriteLine("Quellle quantité ?");
-                                                int quantiteAsupprimer = Convert.ToInt32(Console.ReadLine());
-                                                // fonction qui décremente le stock
-                                                break;
-                                            case 2:
-                                                Console.WriteLine("Quellle quantité ?");
-                                                Console.WriteLine("Rentrez numéro du velo :");
-                                                int numeroVelo2 = Convert.ToInt32(Console.ReadLine());
-                                                int quantiteAsupprimer2 = Convert.ToInt32(Console.ReadLine());
-                                                // fonction qui supprime un nouvel individu avec un DELETE
-                                                break;
-                                        }
-                                        break;
+                                        
 
                                     case 'C':
-                                        Console.WriteLine("Quel est le numéro du velo que vous voulez modifier ?");
-                                        int numeroAmodeifier = Convert.ToInt32(Console.ReadLine());
-                                        Console.WriteLine("Que voulez vous modifier ?");
-                                        string Amodif = Console.ReadLine();//regarder le nom affiché
-                                        // fonction qui update grace à UPDATE 
+                                        Console.WriteLine("Vous avez choisis de modifier une modele");
+                                        Console.WriteLine("\n -----------------------------------\n");
+                                        //fonction afficage 
+                                        string[] tabValeur2 = MenuClass.UpdateFinal("modele");
+                                        bdd.MAJ(connexion, tabValeur2, "modele");
+                                        
                                         break;
 
 
@@ -449,9 +505,21 @@ namespace ProjetBDD_VeloMax
 
                         }
                         break;
+                    #endregion
+                   
+                    case 7:
+                        #region Demo
 
+                        bdd.NombredeClients();
+                       Console.WriteLine( "\n Voici la liste des produits ayant une quantité une  stock<=2");
+                        bdd.ProduitStock2();
+                        bdd.NbproduitFournisseur(connexion);
+                        #endregion
+                        break;
+                   
                 }
-                #endregion
+                
+
 
                 Console.WriteLine("\nTapez Escape pour sortir ou Enter pour continuer");
                 cki = Console.ReadKey();

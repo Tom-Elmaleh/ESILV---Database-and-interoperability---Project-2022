@@ -894,10 +894,17 @@ namespace ProjetBDD_VeloMax
                 courrielI = reader.GetString(5);
                 numero = reader.GetInt32(6);
                 date_adhesion = ConversionDateTime(reader.GetString(7));
-                date_expiration = Date_Expi(id, connection);
-                individus.Add(new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero, date_adhesion,date_expiration));
+                
+                individus.Add(new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero, date_adhesion));
             }
             connection.Close();
+            for(int i = 0; i < individus.Count();i++)
+            {
+                date_expiration = Date_Expi(individus[i].Id, connection);
+                individus[i].Date_Expiration = date_expiration;
+            }
+
+            
         }
         #endregion
         /// <summary>
