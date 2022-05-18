@@ -782,7 +782,7 @@ namespace ProjetBDD_VeloMax
             int n;
             if(Int32.TryParse(tab1[2],out n) == false)
             {
-                tab1[2] = $"'{tab1[2]}";
+                tab1[2] = $"'{tab1[2]}'";
             }
 
             string maj = tab1[2];
@@ -791,7 +791,7 @@ namespace ProjetBDD_VeloMax
 
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = $"update {nomtable} set {attribut = maj} where {attribut =cle};";
+            command.CommandText = $"update {nomtable} set {attribut} = {maj} where {attribut} = {cle};";
             MySqlDataReader reader;
             reader = command.ExecuteReader();
             connection.Close();
