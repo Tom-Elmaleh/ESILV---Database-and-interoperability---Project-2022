@@ -35,9 +35,9 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region AjouterFinal
-        public static string[] AjouterFinal(string nomTable)
+        public static string AjouterFinal(string nomTable)
         {
-            string[] valeurs=new string[0];
+            string valeurs="";
 
             string choix = nomTable.ToLower();
             switch (choix)
@@ -66,9 +66,7 @@ namespace ProjetBDD_VeloMax
                     }
 
 
-                    valeurs = new string[8] { Convert.ToString(id), nomI, Convert.ToString(prenom),
-                        Convert.ToString(telephoneI), Convert.ToString(adresseI), Convert.ToString(courrielI) ,
-                        Convert.ToString(numero), Convert.ToString(date_adhesion.Day)+ "/"+Convert.ToString(date_adhesion.Month)+"/"+ Convert.ToString(date_adhesion.Year) };
+                    valeurs = valeurs = $"{id},'{nomI}','{prenom}','{telephoneI}','{adresseI}','{courrielI}',{numero},'{ Convert.ToString(date_adhesion.Day)}/{Convert.ToString(date_adhesion.Month)}/{Convert.ToString(date_adhesion.Year)}'";
 
                     break;
 
@@ -84,9 +82,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est le libelle du fournisseur ?");
                     int libelle  = Convert.ToInt32(Console.ReadLine());
 
-                    valeurs = new string[5] { Convert.ToString(siret), nomF,
-                        Convert.ToString(addresseF), Convert.ToString(contactF),
-                        Convert.ToString(libelle) };
+                    valeurs =  $"'{siret}','{nomF}','{addresseF}','{contactF}',{libelle}";
 
                     break;
                 case "entreprise":
@@ -103,8 +99,7 @@ namespace ProjetBDD_VeloMax
                     int volume_achat = 0;
                     int remise =0 ;
 
-                    valeurs = new string[7] { Convert.ToString(nomE), telephoneE, Convert.ToString(addresseE),
-                        Convert.ToString(contactE), Convert.ToString(courriel), Convert.ToString(volume_achat) ,Convert.ToString(remise) };
+                    valeurs = $"'{nomE}','{telephoneE}','{addresseE}','{contactE}','{courriel}',{volume_achat},{remise}";
 
                     break;
                 case "piece":
@@ -122,8 +117,7 @@ namespace ProjetBDD_VeloMax
                     int prixP = Convert.ToInt32(Console.ReadLine());
 
 
-                     valeurs = new string[6] { numP, descriptionf, Convert.ToString(num_catalogue), Convert.ToString(delai),
-                         Convert.ToString(stock), Convert.ToString(prixP) };
+                    valeurs = $"'{numP}','{descriptionf}',{num_catalogue},{delai},{stock},{prixP}";
 
                     break;
                 case "modele":
@@ -142,8 +136,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la date de sortie de vente du  velo ? (DD/MM/YY)");
                     string date_sortie =Console.ReadLine();
 
-                    valeurs = new string[7] { Convert.ToString(numM), nomVelo, Convert.ToString(grandeur), 
-                        Convert.ToString(ligne), Convert.ToString(prix), Convert.ToString(date_intro) ,Convert.ToString(date_intro) };
+                    valeurs = $"'{numM}','{nomVelo}','{grandeur}','{ligne}',{prix},'{date_intro}','{date_sortie}'";
                     break;
 
             }
@@ -175,9 +168,9 @@ namespace ProjetBDD_VeloMax
             #endregion
         }
         #region Update Final
-        public static string[] UpdateFinal(string nomTable)
+        public static string UpdateFinal(string nomTable)
         {
-            string[] tab = new string[3];
+            string tab = "";
 
             string choix = nomTable.ToLower();
             switch (choix)
@@ -190,7 +183,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string maj= Console.ReadLine();
 
-                    tab = new string[3] { Convert.ToString(id), attribut, maj };
+                    tab = $"{id},'{attribut}',{maj}";
                     break;
 
                 case "fournissseur":
@@ -201,7 +194,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majF= Console.ReadLine();
 
-                    tab = new string[3] { Convert.ToString(siret), attributF, majF };
+                    tab = $"'{siret}','{attributF}',{majF}";
                     break;
                 case "entreprise":
                     Console.WriteLine("Quel est le nom de l'entreprise que vous voulez modifier");
@@ -211,7 +204,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majE = Console.ReadLine();
 
-                    tab = new string[3] { Convert.ToString(nomE), attributE, majE };
+                    tab = $"'{nomE}','{attributE}',{majE}";
 
                     break;
                 case "piece":
@@ -222,7 +215,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majP = Console.ReadLine();
 
-                    tab = new string[3] { Convert.ToString(numP), attributP, majP };
+                    tab = $"'{numP}','{attributP}',{majP}";
 
                     break;
                 case "modele":
@@ -233,7 +226,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majM = Console.ReadLine();
 
-                    tab = new string[3] { Convert.ToString(numM), attributM, majM };
+                    tab = $"{numM},'{attributM}',{majM}";
 
                     break;
 

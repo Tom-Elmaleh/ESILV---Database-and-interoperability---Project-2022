@@ -750,18 +750,18 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region Creer
-        public  void Creer(MySqlConnection connection, string nomtable, string[] valeurs)
+        public  void Creer(MySqlConnection connection, string nomtable, string valeurs)
         {
-            string valeurSql = "";
-            for(int i =0; i < valeurs.Length-1; i++)
-            {
-                valeurSql = valeurSql + valeurs[i] + ",";
-            }
-            valeurSql = valeurSql + valeurs[valeurs.Length - 1];
+        //    string valeurSql = "";
+        //    for(int i =0; i < valeurs.Length-1; i++)
+        //    {
+        //        valeurSql = valeurSql + valeurs[i] + ",";
+        //    }
+        //    valeurSql = valeurSql + valeurs[valeurs.Length - 1];
 
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = $"insert into {nomtable} values ({valeurSql});";
+            command.CommandText = $"insert into {nomtable} values ({valeurs});";
             MySqlDataReader reader;
             reader = command.ExecuteReader();
             connection.Close();
@@ -770,8 +770,12 @@ namespace ProjetBDD_VeloMax
         #endregion       
 
         #region MAJ
-        public void MAJ(MySqlConnection connection,string[] tab, string nomtable)
+        public void MAJ(MySqlConnection connection,string tab, string nomtable)
         {
+            string[] tab1 = tab.Split(',');
+            listeAttributString
+
+
             string maj = tab[2];
             string attribut = tab[1];
             string cle = tab[0];
