@@ -438,8 +438,9 @@ namespace ProjetBDD_VeloMax
         #region RapportStat
         public void RapportStat(MySqlConnection connection)
         {
-            var liste_Modele_Vendus = new List<Tuple<Modele, int>>();
-            var liste_Piece_Vendues = new List<Tuple<Piece, int>>();
+            //    var liste_Modele_Vendus = new List<Tuple<Modele, int>>();
+            List<Piece> liste_Piece_Vendues = new List<Piece>();
+            List<Modele> liste_Modele_Vendus = new List<Modele>();
 
             int nbModele = 0;
             int nbPiece = 0;
@@ -475,15 +476,16 @@ namespace ProjetBDD_VeloMax
                 ligne = readerModele.GetString(4);
                 date_intro = ConversionDateTime(readerModele.GetString(5));
                 date_sortie = ConversionDateTime(readerModele.GetString(6));
-                nbModele = readerModele.GetInt32(7);
+                nbModele = readerModele.GetInt32(8);
                 stockM = readerModele.GetInt32(7);
 
                 Modele modele0 = new Modele(numM, nomVelo, grandeur,ligne,prix, date_intro, date_sortie, stockM);
-                var monTupleModele = Tuple.Create(modele0, nbModele);
-                liste_Modele_Vendus.Add(monTupleModele);
+                Console.WriteLine(modele0.ToString()+"|"+ Convert.ToString(nbModele));
+                //var monTupleModele = Tuple.Create(modele0, nbModele);
+                liste_Modele_Vendus.Add(modele0);
             }
 
-
+            
             MySqlCommand commandPiece = connection.CreateCommand();
             commandPiece.CommandText = "select  piece.* ,sum(quantiteP)from contenu_piece  natural join piece  group by  numP;";
             MySqlDataReader readerPiece;
@@ -501,8 +503,9 @@ namespace ProjetBDD_VeloMax
 
                 //  stock = reader.GetInt32(6);
                 Piece piece0 = new Piece(numP, descriptionP, num_catalogue, delai, stock, prixP);
-                var monTuplePiece = Tuple.Create(piece0, nbPiece);
-                liste_Piece_Vendues.Add(monTuplePiece);
+               Console.WriteLine( piece0.ToString()+"|"+Convert.ToString(nbPiece));
+                //var monTuplePiece = Tuple.Create(piece0, nbPiece);
+                liste_Piece_Vendues.Add(piece0);
             }
             connection.Close();
 
@@ -513,9 +516,9 @@ namespace ProjetBDD_VeloMax
         #endregion
 
         #region Date_Expiration
-        public List<Tuple<Individu, DateTime>> Date_Expiration(MySqlConnection connection)
+        public void Date_Expiration(MySqlConnection connection)
         {
-            var liste_date_expi = new List<Tuple<Individu, DateTime>>();
+            //liste_date_expi = new List<Tuple<Individu, DateTime>>();
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
             command.CommandText = "select individu.*,date_adhesion, duree from individu natural join fidelio where date_adhesion is not null;";
@@ -551,14 +554,16 @@ namespace ProjetBDD_VeloMax
 
                 date_expiration = date_adhesion.AddYears(duree);
                 Individu indiv = new Individu(id, nomI, prenom, telephoneI, adresseI, courrielI, numero,date_adhesion,date_expiration);
-                var monTuple = Tuple.Create(indiv, date_expiration);
-                liste_date_expi.Add(monTuple);
+                Console.WriteLine(indiv.ToString()+"|"+Convert.ToString(date_adhesion.Day)+"/"+ Convert.ToString(date_adhesion.Month) + "/"+ Convert.ToString(date_adhesion.Year));
+                
+                //var monTuple = Tuple.Create(indiv, date_expiration);
+                //liste_date_expi.Add(indiv);
             }
 
 
             connection.Close();
 
-            return liste_date_expi;
+            
         }
         #endregion
 

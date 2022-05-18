@@ -505,6 +505,41 @@ namespace ProjetBDD_VeloMax
                     #endregion
 
                     case 6:
+                        Console.WriteLine("\n -----------------------------------\n" +
+                    "Vous avez choisis le module Statistique, voici les commandes à votre disposition : ");
+                        Console.WriteLine("\n A. Rapport statistique " +
+                            " \nB.La liste des membres pour chaque programme d’adhésion \nC. Date d’expiration des adhésions " +
+                            "\nD. Les meilleurs clients \nE. analyse des commandes ");
+
+                        string choixStat = Console.ReadLine();
+                        switch(choixStat)
+                        {
+                            case "A":
+                                Console.WriteLine("Voici un rapport statistique des items vendus:");
+                                bdd.RapportStat(connexion);
+                                break;
+                            case "B":
+                                Console.WriteLine("Voici la liste des Membres ayant souscrit à Fidelio:");
+                                bdd.ListeMembres(connexion);
+                                break;
+                            case "C":
+                                Console.WriteLine("Voici les dates d'expiration des licences Fidelio:");
+                                bdd.Date_Expiration(connexion);
+                                break;
+                            case "D":
+                                
+                                bdd.MeilleurClient(connexion);
+                                break;
+                            case "E":
+
+                                Console.WriteLine("Moyenne des Montant des commandes :"+bdd.Moyenne_Montant(connexion));
+                                Console.WriteLine("Moyenne du nombre de piece par commande :" + bdd.Moyenne_Piece(connexion));
+                                Console.WriteLine("Moyenne du nombre de velopar commande:" + bdd.Moyenne_Modele(connexion));
+                                break;
+
+                        }
+
+                        break;
 
 
                     case 7:
