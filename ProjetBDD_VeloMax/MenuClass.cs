@@ -183,7 +183,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string maj= Console.ReadLine();
 
-                    tab = $"{id},'{attribut}',{maj}";
+                    tab = $"{id},{attribut},{maj}";
                     break;
 
                 case "fournissseur":
@@ -194,7 +194,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majF= Console.ReadLine();
 
-                    tab = $"'{siret}','{attributF}',{majF}";
+                    tab = $"'{siret}',{attributF},{majF}";
                     break;
                 case "entreprise":
                     Console.WriteLine("Quel est le nom de l'entreprise que vous voulez modifier");
@@ -204,7 +204,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majE = Console.ReadLine();
 
-                    tab = $"'{nomE}','{attributE}',{majE}";
+                    tab = $"'{nomE}',{attributE},{majE}";
 
                     break;
                 case "piece":
@@ -215,7 +215,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majP = Console.ReadLine();
 
-                    tab = $"'{numP}','{attributP}',{majP}";
+                    tab = $"'{numP}',{attributP},{majP}";
 
                     break;
                 case "modele":
@@ -226,7 +226,7 @@ namespace ProjetBDD_VeloMax
                     Console.WriteLine("Quel est la nouvelle valeur ?");
                     string majM = Console.ReadLine();
 
-                    tab = $"{numM},'{attributM}',{majM}";
+                    tab = $"{numM},{attributM},{majM}";
 
                     break;
 
@@ -297,7 +297,7 @@ namespace ProjetBDD_VeloMax
                     break;
 
                 case "fournissseur":
-                    Console.WriteLine("Quel est le siret du fournisseur que vous voulez modifier ?");
+                    Console.WriteLine("Quel est le siret du fournisseur que vous voulez supprimer ?");
                     string siret = Console.ReadLine();
                     
                     ASupprimer = $"'{siret}'" + ",siret"; 
@@ -305,14 +305,14 @@ namespace ProjetBDD_VeloMax
 
                     break;
                 case "entreprise":
-                    Console.WriteLine("Quel est le nom de l'entreprise que vous voulez modifier ?");
+                    Console.WriteLine("Quel est le nom de l'entreprise que vous voulez supprimer ?");
                     string nomE =Console.ReadLine();
                     ASupprimer = $"'{nomE}'" + ",nomE";
 
 
                     break;
                 case "piece":
-                    Console.WriteLine("Quel est le numero de la piece que vous voulez modifier");
+                    Console.WriteLine("Quel est le numero de la piece que vous voulez supprimer");
                     int numP = Convert.ToInt32(Console.ReadLine());
                     ASupprimer = $"'{numP}'" + ",numP";
 
@@ -320,7 +320,7 @@ namespace ProjetBDD_VeloMax
 
                     break;
                 case "modele":
-                    Console.WriteLine("Quel est le numero du modele que vous voulez modifier ?");
+                    Console.WriteLine("Quel est le numero du modele que vous voulez supprimer ?");
                     int numM = Convert.ToInt32(Console.ReadLine());
 
                     ASupprimer = $"{numM}" + ",numP";

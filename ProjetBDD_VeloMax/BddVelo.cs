@@ -710,11 +710,14 @@ namespace ProjetBDD_VeloMax
             string[] tab1 = tab.Split(',');
             string key = tab1[1];
             string id = tab1[0];
+            
             connection.Open();
             MySqlCommand command = connection.CreateCommand();
             command.CommandText = $"delete from {table} where {key}={id};";
             connection.Close();
+            
             Choose(connection, table);
+            Console.WriteLine("Supresssion réussie avec succès!");
         }
         #endregion
 
@@ -772,6 +775,7 @@ namespace ProjetBDD_VeloMax
             reader = command.ExecuteReader();
             connection.Close();
             Choose(connection, nomtable);
+            Console.WriteLine("Ajout réussi avec succès!");
         }
         #endregion       
 
@@ -796,6 +800,7 @@ namespace ProjetBDD_VeloMax
             reader = command.ExecuteReader();
             connection.Close();
             Choose(connection,nomtable);
+            Console.WriteLine("Mis à jour réussie avec succès!");
         }
         #endregion
 
