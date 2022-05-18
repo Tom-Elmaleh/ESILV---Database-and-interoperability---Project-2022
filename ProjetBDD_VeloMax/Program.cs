@@ -514,6 +514,8 @@ namespace ProjetBDD_VeloMax
                         string choixStat = Console.ReadLine();
                         switch(choixStat)
                         {
+                        #region Statistiques
+
                             case "A":
                                 Console.WriteLine("Voici un rapport statistique des items vendus:");
                                 bdd.RapportStat(connexion);
@@ -538,7 +540,7 @@ namespace ProjetBDD_VeloMax
                                 break;
 
                         }
-
+                        #endregion
                         break;
 
 
@@ -601,6 +603,8 @@ namespace ProjetBDD_VeloMax
                                 jsonWriter.Close();
                                 fileWriter.Close();
                                 //eXPORT XML/JSON
+
+                                Console.WriteLine("Export des clients avec leur programme de fidélité en JSON");
                                 break;
                         }
                         #endregion
